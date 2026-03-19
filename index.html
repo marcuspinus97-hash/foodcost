@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <meta name="theme-color" content="#0d0f14">
+    <meta name="theme-color" content="#ffffff">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Food Cost">
     <title>Food Cost Manager</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,179 +16,538 @@
             name:"Food Cost Manager",short_name:"Food Cost",
             description:"Gestionale food cost per enoteca",
             start_url:".",display:"standalone",
-            background_color:"#0d0f14",theme_color:"#0d0f14",
-            icons:[{src:"data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%23181c27'/><text y='.9em' font-size='72' x='14'>🍷</text></svg>",sizes:"any",type:"image/svg+xml"}]
+            background_color:"#ffffff",theme_color:"#ffffff",
+            icons:[{src:"data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='22' fill='%234f46e5'/><text y='.9em' font-size='72' x='14'>🍷</text></svg>",sizes:"any",type:"image/svg+xml"}]
         };
         const murl=URL.createObjectURL(new Blob([JSON.stringify(manifest)],{type:'application/json'}));
         document.write('<link rel="manifest" href="'+murl+'">');
     </script>
     <style>
         :root {
-            --bg:#0d0f14; --s1:#13161f; --s2:#181c27; --s3:#1e2233; --s4:#252a3a;
-            --border:rgba(255,255,255,0.07); --border2:rgba(255,255,255,0.13);
-            --text:#e2e5f0; --text2:#9aa0b8; --text3:#5c6380;
-            --accent:#6366f1; --accent2:#818cf8;
-            --asoft:rgba(99,102,241,0.13); --aborder:rgba(99,102,241,0.28);
-            --green:#10b981; --gsoft:rgba(16,185,129,0.13);
-            --yellow:#f59e0b; --ysoft:rgba(245,158,11,0.13);
-            --red:#f43f5e; --rsoft:rgba(244,63,94,0.12);
-            --orange:#fb923c; --osoft:rgba(251,146,60,0.12);
-            --r:8px; --r2:12px; --r3:16px;
-            --sidebar:228px;
+            --bg:       #f4f5f7;
+            --surface:  #ffffff;
+            --surface2: #f9fafb;
+            --surface3: #f0f2f5;
+            --border:   rgba(0,0,0,0.08);
+            --border2:  rgba(0,0,0,0.14);
+            --text:     #111827;
+            --text2:    #4b5563;
+            --text3:    #9ca3af;
+            --accent:   #4f46e5;
+            --accent2:  #6366f1;
+            --asoft:    rgba(79,70,229,0.08);
+            --aborder:  rgba(79,70,229,0.2);
+            --green:    #059669;
+            --gsoft:    rgba(5,150,105,0.1);
+            --yellow:   #d97706;
+            --ysoft:    rgba(217,119,6,0.1);
+            --red:      #dc2626;
+            --rsoft:    rgba(220,38,38,0.08);
+            --orange:   #ea580c;
+            --osoft:    rgba(234,88,12,0.08);
+            --sidebar:  240px;
+            --r:        8px;
+            --r2:       12px;
+            --r3:       16px;
+            --shadow:   0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.04);
+            --shadow2:  0 4px 12px rgba(0,0,0,0.08);
         }
-        *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-        html,body{height:100%;height:100dvh;font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.55;-webkit-font-smoothing:antialiased}
 
 ```
-    /* LAYOUT */
-    .app{display:flex;height:100vh;height:100dvh;overflow:hidden}
+    *,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
 
-    /* SIDEBAR */
-    .sidebar{width:var(--sidebar);background:var(--s1);border-right:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0;z-index:10}
-    .sb-brand{padding:20px 16px 18px;border-bottom:1px solid var(--border)}
-    .sb-logo{width:38px;height:38px;background:linear-gradient(135deg,#6366f1,#a78bfa);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:12px;box-shadow:0 4px 16px rgba(99,102,241,0.4)}
-    .sb-name{font-size:14px;font-weight:700;color:var(--text);letter-spacing:-0.3px}
-    .sb-tag{font-size:10.5px;color:var(--text3);margin-top:1px}
-    .sb-nav{padding:10px;flex:1}
-    .nav-section-label{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--text3);padding:10px 8px 5px}
-    .nav-btn{display:flex;align-items:center;gap:10px;width:100%;padding:9px 10px;border-radius:var(--r);background:none;border:none;color:var(--text2);font-size:13px;font-weight:500;cursor:pointer;font-family:'Outfit',sans-serif;transition:all .15s;text-align:left;margin-bottom:1px}
-    .nav-btn:hover{background:var(--s3);color:var(--text)}
-    .nav-btn.active{background:var(--asoft);color:var(--accent2);border:1px solid var(--aborder)}
-    .nav-ico{width:30px;height:30px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:15px;background:var(--s3);flex-shrink:0;transition:background .15s}
-    .nav-btn.active .nav-ico{background:var(--asoft)}
-    .nav-count{margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;color:var(--text3);background:var(--s4);padding:1px 6px;border-radius:99px}
-    .nav-btn.active .nav-count{color:var(--accent);background:var(--asoft)}
-    .sb-footer{padding:10px;border-top:1px solid var(--border)}
-    .btn-reset-sb{display:flex;align-items:center;gap:8px;width:100%;padding:8px 10px;border-radius:var(--r);background:none;border:none;color:var(--text3);font-size:12px;font-weight:500;cursor:pointer;font-family:'Outfit',sans-serif;transition:all .15s}
-    .btn-reset-sb:hover{background:var(--rsoft);color:var(--red)}
-
-    /* MAIN */
-    .main{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0}
-    .topbar{height:58px;background:var(--s1);border-bottom:1px solid var(--border);padding:0 24px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
-    .page-title{font-size:15px;font-weight:700;letter-spacing:-0.3px}
-    .page-desc{font-size:11px;color:var(--text3);margin-top:1px}
-    .content{flex:1;overflow-y:auto;padding:22px 24px 60px}
-
-    /* STAT PILLS */
-    .stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:18px}
-    .stat-pill{background:var(--s2);border:1px solid var(--border);border-radius:var(--r2);padding:14px 16px}
-    .stat-pill-label{font-size:10px;color:var(--text3);font-weight:600;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:5px}
-    .stat-pill-val{font-size:24px;font-weight:700;font-family:'JetBrains Mono',monospace;letter-spacing:-1.5px}
-    .stat-pill-val.accent{color:var(--accent2)}
-    .stat-pill-val.green{color:var(--green)}
-    .stat-pill-val.orange{color:var(--orange)}
-    .stat-pill-val.red{color:var(--red)}
-    .stat-pill-sub{font-size:11px;color:var(--text3);margin-top:2px}
-
-    /* CARD */
-    .card{background:var(--s1);border:1px solid var(--border);border-radius:var(--r3);padding:20px;margin-bottom:14px}
-    .card.ta{background:linear-gradient(135deg,rgba(99,102,241,0.07),var(--s1));border-color:var(--aborder)}
-    .card.tg{background:linear-gradient(135deg,rgba(16,185,129,0.07),var(--s1));border-color:rgba(16,185,129,0.22)}
-    .card.to{background:linear-gradient(135deg,rgba(251,146,60,0.07),var(--s1));border-color:rgba(251,146,60,0.22)}
-    .card-title{font-size:13px;font-weight:700;color:var(--text);display:flex;align-items:center;gap:8px;margin-bottom:14px}
-    .ctag{font-size:10px;font-weight:600;padding:2px 8px;border-radius:99px;background:var(--asoft);color:var(--accent2)}
-    .card-sub{font-size:11px;color:var(--text3);margin-top:2px;margin-bottom:16px}
-
-    /* FORM */
-    .field{display:flex;flex-direction:column;gap:5px}
-    .field label{font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:0.8px}
-    input[type="text"],input[type="number"],select{width:100%;padding:9px 12px;background:var(--s3);border:1px solid var(--border);border-radius:var(--r);color:var(--text);font-family:'Outfit',sans-serif;font-size:13px;font-weight:400;transition:border-color .15s,box-shadow .15s;-webkit-appearance:none;appearance:none}
-    input::placeholder{color:var(--text3)}
-    input:focus,select:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--asoft);background:var(--s4)}
-    select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%235c6380'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:32px;cursor:pointer}
-    select option{background:var(--s3)}
-    .form-grid{display:grid;gap:12px;align-items:end}
-    .fg5{grid-template-columns:2fr 1.2fr 1fr 1fr auto}
-    .fg2{grid-template-columns:1fr auto}
-    @media(max-width:860px){.fg5{grid-template-columns:1fr 1fr}.fg5 .btn-col{grid-column:1/-1}}
-
-    /* BUTTONS */
-    .btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:9px 18px;border-radius:var(--r);font-family:'Outfit',sans-serif;font-size:13px;font-weight:600;cursor:pointer;border:none;transition:all .15s;white-space:nowrap;line-height:1}
-    .btn-p{background:var(--accent);color:#fff;box-shadow:0 2px 10px rgba(99,102,241,0.35)}
-    .btn-p:hover{background:#5255d8;transform:translateY(-1px);box-shadow:0 4px 14px rgba(99,102,241,0.45)}
-    .btn-p:active{transform:none;box-shadow:none}
-    .btn-g{background:var(--green);color:#fff;box-shadow:0 2px 10px rgba(16,185,129,0.3)}
-    .btn-g:hover{background:#0da271;transform:translateY(-1px)}
-    .btn-del{background:none;color:var(--text3);border:1px solid var(--border);padding:6px 9px;border-radius:var(--r);font-size:13px;cursor:pointer;transition:all .15s}
-    .btn-del:hover{background:var(--rsoft);border-color:rgba(244,63,94,0.3);color:var(--red)}
-    .btn-link-del{background:none;border:none;color:var(--text3);font-size:11px;font-weight:600;cursor:pointer;font-family:'Outfit',sans-serif;text-decoration:underline;text-underline-offset:2px;transition:color .15s}
-    .btn-link-del:hover{color:var(--red)}
-
-    /* TABLE */
-    .tbl-wrap{border-radius:var(--r2);border:1px solid var(--border);overflow:hidden;overflow-x:auto}
-    table{width:100%;border-collapse:collapse}
-    thead tr{border-bottom:1px solid var(--border)}
-    th{padding:10px 14px;font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:0.9px;text-align:left;white-space:nowrap;background:var(--s2)}
-    td{padding:12px 14px;border-bottom:1px solid var(--border);font-size:13px;vertical-align:middle}
-    tbody tr:last-child td{border-bottom:none}
-    tbody tr{transition:background .1s}
-    tbody tr:hover td{background:rgba(255,255,255,0.02)}
-    tfoot td{border-top:1px solid var(--border);border-bottom:none;background:var(--s2);font-weight:700}
-    .td-name{font-weight:600}
-    .td-m{font-family:'JetBrains Mono',monospace;font-size:12px}
-    .td-val{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;color:var(--accent2)}
-    .td-muted{color:var(--text3);font-size:12px}
-
-    /* RECIPE CARD */
-    .recipe-card{background:var(--s1);border:1px solid var(--border);border-radius:var(--r3);margin-bottom:14px;overflow:hidden;transition:border-color .2s}
-    .recipe-card:hover{border-color:var(--border2)}
-    .recipe-head{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;background:linear-gradient(90deg,var(--s3),var(--s2));border-bottom:1px solid var(--border)}
-    .recipe-head-left{display:flex;align-items:center;gap:12px}
-    .recipe-ico{width:36px;height:36px;border-radius:9px;background:var(--asoft);border:1px solid var(--aborder);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
-    .recipe-name{font-size:15px;font-weight:700;color:var(--text)}
-    .recipe-meta{font-size:11px;color:var(--text3);margin-top:2px}
-    .recipe-body{padding:16px 18px}
-    .add-row{display:flex;gap:10px;align-items:flex-end;padding:12px;background:var(--s2);border:1px dashed var(--border2);border-radius:var(--r2);margin-top:14px}
-    .add-row>div{flex:1}
-    .add-row>.fsm{flex:0 0 85px}
-    .add-row>.fbtn{flex:0 0 auto}
-
-    /* BADGES */
-    .badge{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:99px;font-size:11px;font-weight:600}
-    .badge.green{background:var(--gsoft);color:var(--green)}
-    .badge.yellow{background:var(--ysoft);color:var(--yellow)}
-    .badge.red{background:var(--rsoft);color:var(--red)}
-
-    /* DASHBOARD */
-    .price-wrap{display:flex;align-items:center;gap:5px}
-    .price-wrap .sym{color:var(--text3);font-size:12px;font-weight:600}
-    .price-wrap input{width:68px;text-align:right;font-family:'JetBrains Mono',monospace;font-weight:600;padding:7px 8px}
-    .fc-ok{color:var(--green);font-family:'JetBrains Mono',monospace;font-weight:600}
-    .fc-warn{color:var(--yellow);font-family:'JetBrains Mono',monospace;font-weight:600}
-    .fc-bad{color:var(--red);font-family:'JetBrains Mono',monospace;font-weight:600}
-
-    /* EMPTY */
-    .empty{text-align:center;padding:48px 20px;color:var(--text3)}
-    .empty-ico{font-size:36px;opacity:.35;margin-bottom:10px}
-    .empty-txt{font-size:13px}
-
-    /* MOBILE NAV */
-    .bottom-nav{display:none}
-    @media(max-width:640px){
-        .sidebar{display:none}
-        .topbar{padding:0 16px}
-        .content{padding:16px 14px 90px}
-        .bottom-nav{display:flex;position:fixed;bottom:0;left:0;right:0;background:var(--s1);border-top:1px solid var(--border);z-index:100;padding-bottom:env(safe-area-inset-bottom)}
-        .bnav-btn{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:10px 4px;background:none;border:none;color:var(--text3);font-size:10px;font-family:'Outfit',sans-serif;font-weight:600;cursor:pointer;transition:color .15s}
-        .bnav-btn.active{color:var(--accent2)}
-        .bnav-ico{font-size:20px}
+    html, body {
+        height:100%; height:100dvh;
+        font-family:'Outfit',sans-serif;
+        background:var(--bg);
+        color:var(--text);
+        font-size:14px;
+        line-height:1.55;
+        -webkit-font-smoothing:antialiased;
     }
 
-    /* ANIMATIONS */
-    @keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-    .card,.recipe-card,.stats-row{animation:fadeUp .25s ease both}
+    /* ── LAYOUT ── */
+    .app { display:flex; height:100vh; height:100dvh; overflow:hidden; }
 
-    /* SCROLLBAR */
-    .hidden{display:none!important}
-    ::-webkit-scrollbar{width:4px;height:4px}
-    ::-webkit-scrollbar-track{background:transparent}
-    ::-webkit-scrollbar-thumb{background:var(--s4);border-radius:99px}
+    /* ── SIDEBAR ── */
+    .sidebar {
+        width:var(--sidebar);
+        background:var(--surface);
+        border-right:1px solid var(--border);
+        display:flex; flex-direction:column;
+        flex-shrink:0;
+    }
+
+    .sb-brand {
+        padding:18px 16px 16px;
+        border-bottom:1px solid var(--border);
+    }
+
+    .sb-logo {
+        width:38px; height:38px;
+        background:linear-gradient(135deg,#4f46e5,#7c3aed);
+        border-radius:10px;
+        display:flex; align-items:center; justify-content:center;
+        font-size:20px; margin-bottom:10px;
+        box-shadow:0 4px 12px rgba(79,70,229,0.3);
+    }
+
+    .sb-name { font-size:14px; font-weight:700; color:var(--text); letter-spacing:-0.3px; }
+    .sb-tag  { font-size:11px; color:var(--text3); margin-top:1px; }
+
+    /* LOCALE SWITCHER */
+    .sb-locale {
+        padding:10px;
+        border-bottom:1px solid var(--border);
+    }
+
+    .locale-label {
+        font-size:9px; font-weight:700; text-transform:uppercase;
+        letter-spacing:1.5px; color:var(--text3);
+        padding:0 8px 5px;
+    }
+
+    .locale-current {
+        display:flex; align-items:center; justify-content:space-between;
+        padding:8px 10px;
+        background:var(--asoft);
+        border:1px solid var(--aborder);
+        border-radius:var(--r);
+        cursor:pointer;
+        transition:all .15s;
+    }
+    .locale-current:hover { background:rgba(79,70,229,0.12); }
+
+    .locale-name {
+        font-size:13px; font-weight:600; color:var(--accent);
+        white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+        max-width:140px;
+    }
+
+    .locale-chevron { color:var(--accent); font-size:10px; flex-shrink:0; }
+
+    .locale-dropdown {
+        background:var(--surface);
+        border:1px solid var(--border);
+        border-radius:var(--r);
+        margin-top:6px;
+        overflow:hidden;
+        box-shadow:var(--shadow2);
+    }
+
+    .locale-item {
+        display:flex; align-items:center; justify-content:space-between;
+        padding:10px 12px;
+        cursor:pointer;
+        font-size:13px; font-weight:500; color:var(--text2);
+        border-bottom:1px solid var(--border);
+        transition:background .1s;
+    }
+    .locale-item:last-child { border-bottom:none; }
+    .locale-item:hover { background:var(--surface3); }
+    .locale-item.active { color:var(--accent); font-weight:600; }
+    .locale-item-check { color:var(--accent); font-size:13px; }
+
+    .btn-add-locale {
+        display:flex; align-items:center; gap:6px;
+        width:100%; padding:9px 12px;
+        background:none; border:none;
+        color:var(--accent); font-size:12px; font-weight:600;
+        cursor:pointer; font-family:'Outfit',sans-serif;
+        border-top:1px solid var(--border);
+        transition:background .15s;
+    }
+    .btn-add-locale:hover { background:var(--asoft); }
+
+    /* NAV */
+    .sb-nav { padding:10px; flex:1; }
+
+    .nav-section-label {
+        font-size:9px; font-weight:700; text-transform:uppercase;
+        letter-spacing:1.5px; color:var(--text3);
+        padding:8px 8px 4px;
+    }
+
+    .nav-btn {
+        display:flex; align-items:center; gap:10px;
+        width:100%; padding:9px 10px;
+        border-radius:var(--r);
+        background:none; border:none;
+        color:var(--text2); font-size:13px; font-weight:500;
+        cursor:pointer; font-family:'Outfit',sans-serif;
+        transition:all .15s; text-align:left;
+        margin-bottom:1px;
+    }
+    .nav-btn:hover { background:var(--surface3); color:var(--text); }
+    .nav-btn.active { background:var(--asoft); color:var(--accent); border:1px solid var(--aborder); }
+
+    .nav-ico {
+        width:30px; height:30px; border-radius:7px;
+        display:flex; align-items:center; justify-content:center;
+        font-size:15px; background:var(--surface3); flex-shrink:0;
+    }
+    .nav-btn.active .nav-ico { background:var(--asoft); }
+
+    .nav-count {
+        margin-left:auto;
+        font-family:'JetBrains Mono',monospace;
+        font-size:10px; font-weight:600; color:var(--text3);
+        background:var(--surface3); padding:1px 6px; border-radius:99px;
+    }
+    .nav-btn.active .nav-count { color:var(--accent); background:var(--asoft); }
+
+    .sb-footer {
+        padding:10px; border-top:1px solid var(--border);
+    }
+
+    .btn-reset-sb {
+        display:flex; align-items:center; gap:8px;
+        width:100%; padding:8px 10px;
+        border-radius:var(--r); background:none; border:none;
+        color:var(--text3); font-size:12px; font-weight:500;
+        cursor:pointer; font-family:'Outfit',sans-serif; transition:all .15s;
+    }
+    .btn-reset-sb:hover { background:var(--rsoft); color:var(--red); }
+
+    /* ── MAIN ── */
+    .main { flex:1; display:flex; flex-direction:column; overflow:hidden; min-width:0; }
+
+    .topbar {
+        height:58px; background:var(--surface);
+        border-bottom:1px solid var(--border);
+        padding:0 24px;
+        display:flex; align-items:center; justify-content:space-between;
+        flex-shrink:0; box-shadow:var(--shadow);
+    }
+
+    .page-title { font-size:15px; font-weight:700; letter-spacing:-0.3px; }
+    .page-desc  { font-size:11px; color:var(--text3); margin-top:1px; }
+
+    .topbar-locale {
+        display:flex; align-items:center; gap:6px;
+        padding:6px 12px;
+        background:var(--asoft); border:1px solid var(--aborder);
+        border-radius:99px; font-size:12px; font-weight:600; color:var(--accent);
+    }
+
+    .content { flex:1; overflow-y:auto; padding:22px 24px 60px; }
+
+    /* ── STAT PILLS ── */
+    .stats-row {
+        display:grid;
+        grid-template-columns:repeat(auto-fit, minmax(130px,1fr));
+        gap:10px; margin-bottom:18px;
+    }
+
+    .stat-pill {
+        background:var(--surface); border:1px solid var(--border);
+        border-radius:var(--r2); padding:14px 16px;
+        box-shadow:var(--shadow);
+    }
+    .stat-pill-label { font-size:10px; color:var(--text3); font-weight:600; text-transform:uppercase; letter-spacing:0.8px; margin-bottom:5px; }
+    .stat-pill-val   { font-size:24px; font-weight:700; font-family:'JetBrains Mono',monospace; letter-spacing:-1.5px; }
+    .stat-pill-val.accent { color:var(--accent2); }
+    .stat-pill-val.green  { color:var(--green); }
+    .stat-pill-val.orange { color:var(--orange); }
+    .stat-pill-val.red    { color:var(--red); }
+    .stat-pill-sub { font-size:11px; color:var(--text3); margin-top:2px; }
+
+    /* ── CARD ── */
+    .card {
+        background:var(--surface); border:1px solid var(--border);
+        border-radius:var(--r3); padding:20px; margin-bottom:14px;
+        box-shadow:var(--shadow);
+    }
+    .card.ta { background:var(--surface); border-color:var(--aborder); border-left:3px solid var(--accent); }
+    .card.tg { background:var(--surface); border-color:rgba(5,150,105,0.25); border-left:3px solid var(--green); }
+    .card.to { background:var(--surface); border-color:rgba(234,88,12,0.25); border-left:3px solid var(--orange); }
+
+    .card-title { font-size:13px; font-weight:700; color:var(--text); display:flex; align-items:center; gap:8px; margin-bottom:14px; }
+    .ctag { font-size:10px; font-weight:600; padding:2px 8px; border-radius:99px; background:var(--asoft); color:var(--accent); }
+    .card-sub { font-size:11px; color:var(--text3); margin-top:-8px; margin-bottom:16px; }
+
+    /* ── FORM ── */
+    .field { display:flex; flex-direction:column; gap:5px; }
+    .field label { font-size:10px; font-weight:700; color:var(--text3); text-transform:uppercase; letter-spacing:0.8px; }
+
+    input[type="text"],
+    input[type="number"],
+    select {
+        width:100%;
+        padding:9px 12px;
+        background:var(--surface2);
+        border:1px solid var(--border2);
+        border-radius:var(--r);
+        color:var(--text);
+        font-family:'Outfit',sans-serif;
+        font-size:13px; font-weight:400;
+        transition:border-color .15s, box-shadow .15s;
+        -webkit-appearance:none; appearance:none;
+    }
+    input::placeholder { color:var(--text3); }
+    input:focus, select:focus {
+        outline:none; border-color:var(--accent);
+        box-shadow:0 0 0 3px var(--asoft);
+        background:var(--surface);
+    }
+    select {
+        background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%239ca3af'/%3E%3C/svg%3E");
+        background-repeat:no-repeat; background-position:right 12px center;
+        padding-right:32px; cursor:pointer;
+    }
+
+    .form-grid { display:grid; gap:12px; align-items:end; }
+    .fg5 { grid-template-columns:2fr 1.2fr 1fr 1fr auto; }
+    .fg2 { grid-template-columns:1fr auto; }
+
+    @media(max-width:860px) {
+        .fg5 { grid-template-columns:1fr 1fr; }
+        .fg5 .btn-col { grid-column:1/-1; }
+    }
+
+    /* ── BUTTONS ── */
+    .btn {
+        display:inline-flex; align-items:center; justify-content:center; gap:7px;
+        padding:9px 18px; border-radius:var(--r);
+        font-family:'Outfit',sans-serif; font-size:13px; font-weight:600;
+        cursor:pointer; border:none; transition:all .15s;
+        white-space:nowrap; line-height:1;
+    }
+
+    .btn-p { background:var(--accent); color:#fff; box-shadow:0 2px 8px rgba(79,70,229,0.3); }
+    .btn-p:hover { background:#4338ca; transform:translateY(-1px); }
+    .btn-p:active { transform:none; }
+
+    .btn-g { background:var(--green); color:#fff; box-shadow:0 2px 8px rgba(5,150,105,0.25); }
+    .btn-g:hover { background:#047857; transform:translateY(-1px); }
+
+    .btn-del {
+        background:none; color:var(--text3);
+        border:1px solid var(--border2); padding:6px 9px;
+        border-radius:var(--r); font-size:13px; cursor:pointer; transition:all .15s;
+    }
+    .btn-del:hover { background:var(--rsoft); border-color:rgba(220,38,38,0.25); color:var(--red); }
+
+    .btn-link-del {
+        background:none; border:none; color:var(--text3);
+        font-size:11px; font-weight:600; cursor:pointer;
+        font-family:'Outfit',sans-serif;
+        text-decoration:underline; text-underline-offset:2px; transition:color .15s;
+    }
+    .btn-link-del:hover { color:var(--red); }
+
+    /* ── TABLE ── */
+    .tbl-wrap { border-radius:var(--r2); border:1px solid var(--border); overflow:hidden; overflow-x:auto; }
+    table { width:100%; border-collapse:collapse; }
+    thead tr { border-bottom:1px solid var(--border); }
+    th { padding:10px 14px; font-size:10px; font-weight:700; color:var(--text3); text-transform:uppercase; letter-spacing:0.9px; text-align:left; white-space:nowrap; background:var(--surface2); }
+    td { padding:12px 14px; border-bottom:1px solid var(--border); font-size:13px; vertical-align:middle; }
+    tbody tr:last-child td { border-bottom:none; }
+    tbody tr { transition:background .1s; }
+    tbody tr:hover td { background:var(--surface2); }
+    tfoot td { border-top:1px solid var(--border); border-bottom:none; background:var(--surface2); font-weight:700; }
+
+    .td-name { font-weight:600; }
+    .td-m    { font-family:'JetBrains Mono',monospace; font-size:12px; }
+    .td-val  { font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:600; color:var(--accent); }
+    .td-muted { color:var(--text3); font-size:12px; }
+
+    /* ── RECIPE CARD ── */
+    .recipe-card {
+        background:var(--surface); border:1px solid var(--border);
+        border-radius:var(--r3); margin-bottom:14px; overflow:hidden;
+        box-shadow:var(--shadow); transition:border-color .2s;
+    }
+    .recipe-card:hover { border-color:var(--border2); }
+
+    .recipe-head {
+        display:flex; align-items:center; justify-content:space-between;
+        padding:14px 18px;
+        background:linear-gradient(90deg,var(--surface2),var(--surface));
+        border-bottom:1px solid var(--border);
+    }
+    .recipe-head-left { display:flex; align-items:center; gap:12px; }
+    .recipe-ico {
+        width:36px; height:36px; border-radius:9px;
+        background:var(--asoft); border:1px solid var(--aborder);
+        display:flex; align-items:center; justify-content:center;
+        font-size:17px; flex-shrink:0;
+    }
+    .recipe-name { font-size:15px; font-weight:700; color:var(--text); }
+    .recipe-meta { font-size:11px; color:var(--text3); margin-top:2px; }
+    .recipe-body { padding:16px 18px; }
+
+    .add-row {
+        display:flex; gap:10px; align-items:flex-end;
+        padding:12px; background:var(--surface2);
+        border:1px dashed var(--border2);
+        border-radius:var(--r2); margin-top:14px;
+    }
+    .add-row > div   { flex:1; }
+    .add-row > .fsm  { flex:0 0 85px; }
+    .add-row > .fbtn { flex:0 0 auto; }
+
+    /* ── BADGES ── */
+    .badge { display:inline-flex; align-items:center; gap:5px; padding:4px 10px; border-radius:99px; font-size:11px; font-weight:600; }
+    .badge.green  { background:var(--gsoft); color:var(--green); }
+    .badge.yellow { background:var(--ysoft); color:var(--yellow); }
+    .badge.red    { background:var(--rsoft); color:var(--red); }
+
+    /* ── DASHBOARD ── */
+    .price-wrap { display:flex; align-items:center; gap:5px; }
+    .price-wrap .sym { color:var(--text3); font-size:12px; font-weight:600; }
+    .price-wrap input { width:68px; text-align:right; font-family:'JetBrains Mono',monospace; font-weight:600; padding:7px 8px; }
+
+    .fc-ok   { color:var(--green);  font-family:'JetBrains Mono',monospace; font-weight:600; }
+    .fc-warn { color:var(--yellow); font-family:'JetBrains Mono',monospace; font-weight:600; }
+    .fc-bad  { color:var(--red);    font-family:'JetBrains Mono',monospace; font-weight:600; }
+
+    /* ── EMPTY ── */
+    .empty { text-align:center; padding:48px 20px; color:var(--text3); }
+    .empty-ico { font-size:36px; opacity:.35; margin-bottom:10px; }
+    .empty-txt { font-size:13px; }
+
+    /* ── MODAL ── */
+    .modal-overlay {
+        position:fixed; inset:0;
+        background:rgba(0,0,0,0.45);
+        z-index:3000;
+        display:flex; align-items:center; justify-content:center;
+        padding:20px;
+    }
+    .modal {
+        background:var(--surface);
+        border:1px solid var(--border);
+        border-radius:var(--r3);
+        padding:24px; width:100%; max-width:360px;
+        box-shadow:0 20px 60px rgba(0,0,0,0.15);
+        animation:fadeUp .2s ease;
+    }
+    .modal-title { font-size:16px; font-weight:700; margin-bottom:6px; }
+    .modal-sub   { font-size:12px; color:var(--text3); margin-bottom:18px; }
+    .modal-actions { display:flex; gap:8px; margin-top:16px; }
+    .modal-actions .btn { flex:1; }
+    .btn-cancel { background:var(--surface3); color:var(--text2); border:1px solid var(--border2); }
+    .btn-cancel:hover { background:var(--bg); }
+
+    /* ── SCREEN SELECTOR ── */
+    .screen-selector {
+        position:fixed; inset:0;
+        background:var(--bg);
+        z-index:2000;
+        display:flex; align-items:center; justify-content:center;
+        padding:20px;
+    }
+    .selector-inner { width:100%; max-width:420px; }
+    .selector-logo {
+        width:56px; height:56px;
+        background:linear-gradient(135deg,#4f46e5,#7c3aed);
+        border-radius:14px; display:flex; align-items:center; justify-content:center;
+        font-size:28px; margin:0 auto 16px;
+        box-shadow:0 8px 24px rgba(79,70,229,0.35);
+    }
+    .selector-title { font-size:24px; font-weight:700; text-align:center; letter-spacing:-0.5px; margin-bottom:4px; }
+    .selector-sub   { font-size:13px; color:var(--text3); text-align:center; margin-bottom:28px; }
+
+    .locale-list { display:flex; flex-direction:column; gap:8px; margin-bottom:16px; }
+
+    .locale-card {
+        display:flex; align-items:center; justify-content:space-between;
+        padding:14px 16px;
+        background:var(--surface); border:1px solid var(--border);
+        border-radius:var(--r2); cursor:pointer;
+        transition:all .15s; box-shadow:var(--shadow);
+    }
+    .locale-card:hover { border-color:var(--aborder); background:var(--asoft); }
+    .locale-card-name { font-size:14px; font-weight:600; color:var(--text); }
+    .locale-card-meta { font-size:11px; color:var(--text3); margin-top:2px; }
+    .locale-card-arrow { color:var(--text3); font-size:16px; }
+
+    .btn-new-locale {
+        display:flex; align-items:center; justify-content:center; gap:8px;
+        width:100%; padding:12px;
+        background:none; border:2px dashed var(--border2);
+        border-radius:var(--r2); cursor:pointer;
+        color:var(--accent); font-size:13px; font-weight:600;
+        font-family:'Outfit',sans-serif; transition:all .15s;
+    }
+    .btn-new-locale:hover { background:var(--asoft); border-color:var(--aborder); }
+
+    /* ── MOBILE BOTTOM NAV ── */
+    .bottom-nav { display:none; }
+
+    @media(max-width:640px) {
+        .sidebar { display:none; }
+        .topbar  { padding:0 16px; }
+        .content { padding:16px 14px 90px; }
+        .bottom-nav {
+            display:flex; position:fixed; bottom:0; left:0; right:0;
+            background:var(--surface); border-top:1px solid var(--border);
+            z-index:100; padding-bottom:env(safe-area-inset-bottom);
+            box-shadow:0 -2px 10px rgba(0,0,0,0.06);
+        }
+        .bnav-btn {
+            flex:1; display:flex; flex-direction:column;
+            align-items:center; justify-content:center; gap:4px;
+            padding:10px 4px; background:none; border:none;
+            color:var(--text3); font-size:10px;
+            font-family:'Outfit',sans-serif; font-weight:600; cursor:pointer; transition:color .15s;
+        }
+        .bnav-btn.active { color:var(--accent); }
+        .bnav-ico { font-size:20px; }
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+        from { opacity:0; transform:translateY(10px); }
+        to   { opacity:1; transform:translateY(0); }
+    }
+    .card,.recipe-card,.stats-row { animation:fadeUp .25s ease both; }
+
+    /* ── UTILS ── */
+    .hidden { display:none !important; }
+    ::-webkit-scrollbar { width:4px; height:4px; }
+    ::-webkit-scrollbar-track { background:transparent; }
+    ::-webkit-scrollbar-thumb { background:var(--border2); border-radius:99px; }
 </style>
 ```
 
 </head>
 <body>
-<div class="app">
+
+<!-- ══════════════════════════════════════ -->
+
+<!-- SCHERMATA SELEZIONE LOCALE            -->
+
+<!-- ══════════════════════════════════════ -->
+
+<div class="screen-selector" id="screen-selector">
+    <div class="selector-inner">
+        <div id="selector-back-wrap" style="margin-bottom:12px;display:none">
+            <button onclick="avviaApp()" style="background:none;border:none;color:var(--accent);font-size:13px;font-weight:600;cursor:pointer;font-family:'Outfit',sans-serif;display:flex;align-items:center;gap:4px;">← Torna al locale attivo</button>
+        </div>
+        <div class="selector-logo">🍷</div>
+        <div class="selector-title">Food Cost Manager</div>
+        <div class="selector-sub">Seleziona o crea un locale per iniziare</div>
+
+```
+    <div class="locale-list" id="locale-list"></div>
+
+    <button class="btn-new-locale" onclick="mostraModalNuovoLocale()">
+        + Aggiungi nuovo locale
+    </button>
+</div>
+```
+
+</div>
+
+<!-- ══════════════════════════════════════ -->
+
+<!-- APP PRINCIPALE                        -->
+
+<!-- ══════════════════════════════════════ -->
+
+<div class="app hidden" id="app-main">
 
 ```
 <!-- SIDEBAR -->
@@ -198,6 +557,20 @@
         <div class="sb-name">Food Cost</div>
         <div class="sb-tag">Gestione Enoteca</div>
     </div>
+
+    <!-- LOCALE SWITCHER -->
+    <div class="sb-locale">
+        <div class="locale-label">Locale attivo</div>
+        <div class="locale-current" onclick="toggleLocaleDropdown()">
+            <span class="locale-name" id="sb-locale-name">—</span>
+            <span class="locale-chevron" id="locale-chevron">▼</span>
+        </div>
+        <div class="locale-dropdown hidden" id="locale-dropdown">
+            <div id="locale-dropdown-list"></div>
+            <button class="btn-add-locale" onclick="mostraModalNuovoLocale()">+ Nuovo locale</button>
+        </div>
+    </div>
+
     <nav class="sb-nav">
         <div class="nav-section-label">Moduli</div>
         <button class="nav-btn active" onclick="switchTab('magazzino')" id="tab-magazzino">
@@ -215,8 +588,9 @@
             <span>Dashboard</span>
         </button>
     </nav>
+
     <div class="sb-footer">
-        <button class="btn-reset-sb" onclick="resetData()">↺ Reset dati esempio</button>
+        <button class="btn-reset-sb" onclick="eliminaLocale()">🗑 Elimina locale attivo</button>
     </div>
 </aside>
 
@@ -225,16 +599,16 @@
     <div class="topbar">
         <div>
             <div class="page-title" id="page-title">Magazzino Ingredienti</div>
-            <div class="page-desc" id="page-desc">Prezzi e rese degli ingredienti</div>
+            <div class="page-desc"  id="page-desc">Prezzi e rese degli ingredienti</div>
         </div>
+        <div class="topbar-locale" id="topbar-locale-name" onclick="mostraSelector()" style="cursor:pointer" title="Cambia locale">🍴 —</div>
     </div>
 
     <div class="content" id="content-area">
 
-        <!-- ══ MAGAZZINO ══ -->
+        <!-- MAGAZZINO -->
         <div id="sec-magazzino">
             <div class="stats-row" id="stats-mag"></div>
-
             <div class="card ta">
                 <div class="card-title">Aggiungi Ingrediente <span class="ctag">nuovo</span></div>
                 <div class="card-sub">Inserisci prezzi IVA esclusa dalla fattura del fornitore</div>
@@ -263,9 +637,14 @@
                     </div>
                 </form>
             </div>
-
             <div class="card">
-                <div class="card-title">Lista Ingredienti</div>
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;gap:12px;flex-wrap:wrap">
+                    <div class="card-title" style="margin-bottom:0">Lista Ingredienti</div>
+                    <div style="position:relative;flex:1;max-width:260px;min-width:160px">
+                        <span style="position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--text3);font-size:14px;pointer-events:none">🔍</span>
+                        <input type="text" id="search-ingredienti" placeholder="Cerca ingrediente..." oninput="renderMagazzino()" style="padding-left:32px;margin:0">
+                    </div>
+                </div>
                 <div class="tbl-wrap">
                     <table>
                         <thead>
@@ -285,7 +664,7 @@
             </div>
         </div>
 
-        <!-- ══ RICETTARIO ══ -->
+        <!-- RICETTARIO -->
         <div id="sec-ricettario" class="hidden">
             <div class="card tg">
                 <div class="card-title">Nuovo Piatto / Tagliere</div>
@@ -303,10 +682,9 @@
             <div id="contenitore-piatti"></div>
         </div>
 
-        <!-- ══ DASHBOARD ══ -->
+        <!-- DASHBOARD -->
         <div id="sec-dashboard" class="hidden">
             <div class="stats-row" id="stats-dash"></div>
-
             <div class="card to">
                 <div class="card-title">Impostazioni Globali</div>
                 <div style="display:flex;gap:20px;flex-wrap:wrap;align-items:flex-end;margin-top:4px">
@@ -321,7 +699,6 @@
                     <div style="font-size:11px;color:var(--text3);padding-bottom:10px">Modifica per ricalcolare tutti i prezzi.</div>
                 </div>
             </div>
-
             <div class="card">
                 <div class="card-title">Analisi Prezzi &amp; Margini</div>
                 <div class="tbl-wrap">
@@ -351,7 +728,7 @@
 
 <!-- MOBILE BOTTOM NAV -->
 
-<nav class="bottom-nav">
+<nav class="bottom-nav" id="bottom-nav">
     <button class="bnav-btn active" onclick="switchTab('magazzino')" id="bnav-magazzino">
         <span class="bnav-ico">🧂</span>Magazzino
     </button>
@@ -363,155 +740,406 @@
     </button>
 </nav>
 
+<!-- MODAL NUOVO LOCALE -->
+
+<div class="modal-overlay hidden" id="modal-overlay">
+    <div class="modal">
+        <div class="modal-title">Nuovo Locale</div>
+        <div class="modal-sub">Inserisci il nome del ristorante o locale</div>
+        <div class="field">
+            <label>Nome Locale</label>
+            <input type="text" id="nuovo-locale-nome" placeholder="es. Enoteca del Borgo">
+        </div>
+        <div class="modal-actions">
+            <button class="btn btn-cancel" onclick="chiudiModal()">Annulla</button>
+            <button class="btn btn-p" onclick="creaLocale()">Crea Locale</button>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL CONFERMA ELIMINA -->
+
+<div class="modal-overlay hidden" id="confirm-overlay">
+    <div class="modal">
+        <div class="modal-title" id="confirm-title">Conferma eliminazione</div>
+        <div class="modal-sub" id="confirm-msg">Sei sicuro?</div>
+        <div class="modal-actions">
+            <button class="btn btn-cancel" onclick="chiudiConfirm()">Annulla</button>
+            <button class="btn" id="confirm-ok-btn" style="background:var(--red);color:#fff">Elimina</button>
+        </div>
+    </div>
+</div>
+
 <script>
-// ═══ DATABASE ═══
-const INIT = {
-    ingredienti:[
-        {id:'i1',nome:'Prosciutto di Parma DOP',prezzoLordo:24.00,resa:90,fornitore:'Salumificio Rossi'},
-        {id:'i2',nome:'Pecorino Romano DOP',prezzoLordo:16.50,resa:100,fornitore:'Caseificio Bianchi'},
-        {id:'i3',nome:'Pane Casareccio',prezzoLordo:4.00,resa:100,fornitore:'Forno del Borgo'},
-        {id:'i4',nome:'Salame Toscano',prezzoLordo:18.00,resa:95,fornitore:'Salumificio Rossi'},
-        {id:'i5',nome:'Bruschette Artigianali',prezzoLordo:3.20,resa:100,fornitore:'Forno del Borgo'},
-        {id:'i6',nome:'Miele di Acacia',prezzoLordo:12.00,resa:100,fornitore:'Apicoltura Verdi'},
-    ],
-    piatti:[
-        {id:'p1',nome:'Tagliere Piccolo Base',prezzoScelto:12.00,
-         ricetta:[{ingId:'i1',grammi:50},{ingId:'i2',grammi:60},{ingId:'i3',grammi:100}]},
-        {id:'p2',nome:'Tagliere della Casa Medio',prezzoScelto:18.00,
-         ricetta:[{ingId:'i1',grammi:80},{ingId:'i4',grammi:70},{ingId:'i2',grammi:80},{ingId:'i5',grammi:60},{ingId:'i6',grammi:20}]}
-    ]
-};
-
-let db = JSON.parse(localStorage.getItem('fcDB_v3')) || JSON.parse(JSON.stringify(INIT));
-
-function salva(){localStorage.setItem('fcDB_v3',JSON.stringify(db));renderTutto()}
-function resetData(){if(!confirm('Cancellare tutto e ricaricare i dati di esempio?'))return;db=JSON.parse(JSON.stringify(INIT));salva()}
-
-// ═══ NAV ═══
-const TABS = {
-    magazzino: {title:'Magazzino Ingredienti',     desc:'Prezzi e rese degli ingredienti'},
-    ricettario:{title:'Distinta Base (Ricette)',    desc:'Composizione e costo di ogni piatto'},
-    dashboard: {title:'Dashboard Prezzi & Margini',desc:'Analisi food cost e prezzi di vendita'}
-};
-
-function switchTab(name){
-    Object.keys(TABS).forEach(t=>{
-        document.getElementById('sec-'+t).classList.add('hidden');
-        document.getElementById('tab-'+t).classList.remove('active');
-        const bn=document.getElementById('bnav-'+t);if(bn)bn.classList.remove('active');
-    });
-    document.getElementById('sec-'+name).classList.remove('hidden');
-    document.getElementById('tab-'+name).classList.add('active');
-    const bn=document.getElementById('bnav-'+name);if(bn)bn.classList.add('active');
-    document.getElementById('page-title').textContent=TABS[name].title;
-    document.getElementById('page-desc').textContent=TABS[name].desc;
-    document.getElementById('content-area').scrollTop=0;
+// ═══════════════════════════════════════════
+// CUSTOM CONFIRM (Safari iOS blocca confirm())
+// ═══════════════════════════════════════════
+function chiudiConfirm() {
+    document.getElementById('confirm-overlay').classList.add('hidden');
+    _confirmCb = null;
+}
+function mostraConfirm(msg, cb) {
+    document.getElementById('confirm-msg').textContent = msg;
+    document.getElementById('confirm-overlay').classList.remove('hidden');
+    _confirmCb = cb;
+    document.getElementById('confirm-ok-btn').onclick = function() {
+        const fn = _confirmCb; // salva prima di azzerare
+        chiudiConfirm();
+        if (fn) fn();
+    };
 }
 
-// ═══ MATH ═══
-function cxg(ing){return(ing.prezzoLordo/(ing.resa/100))/1000}
-function cxp(p){return p.ricetta.reduce((t,r)=>{const i=db.ingredienti.find(x=>x.id===r.ingId);return t+(i?cxg(i)*r.grammi:0)},0)}
-function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+// ═══════════════════════════════════════════
 
-// ═══ MAGAZZINO ═══
-document.getElementById('form-ingrediente').addEventListener('submit',function(e){
-    e.preventDefault();
-    db.ingredienti.push({
-        id:'i'+Date.now(),
-        nome:document.getElementById('ing-nome').value.trim(),
-        prezzoLordo:parseFloat(document.getElementById('ing-prezzo').value),
-        resa:parseFloat(document.getElementById('ing-resa').value),
-        fornitore:document.getElementById('ing-fornitore').value.trim()||'—'
+// Struttura: { locali: [{id, nome, ingredienti, piatti}], localeAttivoId: null }
+function caricaDB() {
+    const raw = localStorage.getItem('fcMultiDB_v1');
+    if (raw) return JSON.parse(raw);
+    return { locali: [], localeAttivoId: null };
+}
+
+function salvaDB() {
+    localStorage.setItem('fcMultiDB_v1', JSON.stringify(appDB));
+}
+
+let appDB = caricaDB();
+
+// Dati di esempio per un nuovo locale
+function datiEsempio() {
+    return {
+        ingredienti: [
+            {id:'i1', nome:'Prosciutto di Parma DOP', prezzoLordo:24.00, resa:90,  fornitore:'Salumificio Rossi'},
+            {id:'i2', nome:'Pecorino Romano DOP',     prezzoLordo:16.50, resa:100, fornitore:'Caseificio Bianchi'},
+            {id:'i3', nome:'Pane Casareccio',          prezzoLordo:4.00,  resa:100, fornitore:'Forno del Borgo'},
+            {id:'i4', nome:'Salame Toscano',           prezzoLordo:18.00, resa:95,  fornitore:'Salumificio Rossi'},
+        ],
+        piatti: [
+            {id:'p1', nome:'Tagliere Piccolo Base', prezzoScelto:12.00,
+             ricetta:[{ingId:'i1',grammi:50},{ingId:'i2',grammi:60},{ingId:'i3',grammi:100}]},
+            {id:'p2', nome:'Tagliere della Casa', prezzoScelto:18.00,
+             ricetta:[{ingId:'i1',grammi:80},{ingId:'i4',grammi:70},{ingId:'i2',grammi:80}]}
+        ]
+    };
+}
+
+// Locale attivo corrente
+function localeAttivo() {
+    return appDB.locali.find(l => l.id === appDB.localeAttivoId) || null;
+}
+
+function db() { return localeAttivo(); }
+
+// ═══════════════════════════════════════════
+// GESTIONE LOCALI
+// ═══════════════════════════════════════════
+
+function creaLocale() {
+    const nome = document.getElementById('nuovo-locale-nome').value.trim();
+    if (!nome) return alert('Inserisci un nome per il locale.');
+
+    const esempio = datiEsempio();
+    const nuovoLocale = {
+        id: 'locale_' + Date.now(),
+        nome: nome,
+        ingredienti: esempio.ingredienti,
+        piatti: esempio.piatti
+    };
+
+    appDB.locali.push(nuovoLocale);
+    appDB.localeAttivoId = nuovoLocale.id;
+    salvaDB();
+    chiudiModal();
+    document.getElementById('nuovo-locale-nome').value = '';
+    avviaApp();
+}
+
+function selezionaLocale(id) {
+    appDB.localeAttivoId = id;
+    salvaDB();
+    chiudiLocaleDropdown();
+    avviaApp();
+}
+
+function eliminaLocale() {
+    const loc = localeAttivo();
+    if (!loc) return;
+    mostraConfirm(`Eliminare il locale "${loc.nome}" con tutti i suoi dati?`, () => {
+        appDB.locali = appDB.locali.filter(l => l.id !== loc.id);
+        appDB.localeAttivoId = appDB.locali.length ? appDB.locali[0].id : null;
+        salvaDB();
+        if (!appDB.localeAttivoId) { mostraSelector(); } else { avviaApp(); }
     });
-    this.reset();document.getElementById('ing-resa').value=100;salva();
+}
+
+function mostraModalNuovoLocale() {
+    chiudiLocaleDropdown();
+    document.getElementById('modal-overlay').classList.remove('hidden');
+    setTimeout(() => document.getElementById('nuovo-locale-nome').focus(), 100);
+}
+
+function chiudiModal() {
+    document.getElementById('modal-overlay').classList.add('hidden');
+}
+
+function toggleLocaleDropdown() {
+    const dd = document.getElementById('locale-dropdown');
+    const ch = document.getElementById('locale-chevron');
+    if (dd.classList.contains('hidden')) {
+        renderLocaleDropdown();
+        dd.classList.remove('hidden');
+        ch.textContent = '▲';
+    } else {
+        chiudiLocaleDropdown();
+    }
+}
+
+function chiudiLocaleDropdown() {
+    document.getElementById('locale-dropdown').classList.add('hidden');
+    document.getElementById('locale-chevron').textContent = '▼';
+}
+
+function renderLocaleDropdown() {
+    const list = document.getElementById('locale-dropdown-list');
+    list.innerHTML = appDB.locali.map(l => `
+        <div class="locale-item ${l.id === appDB.localeAttivoId ? 'active' : ''}"
+             onclick="selezionaLocale('${l.id}')">
+            <span>${esc(l.nome)}</span>
+            ${l.id === appDB.localeAttivoId ? '<span class="locale-item-check">✓</span>' : ''}
+        </div>
+    `).join('');
+}
+
+// ═══════════════════════════════════════════
+// SCHERMATA SELECTOR
+// ═══════════════════════════════════════════
+
+function mostraSelector() {
+    document.getElementById('screen-selector').classList.remove('hidden');
+    document.getElementById('app-main').classList.add('hidden');
+    document.getElementById('bottom-nav').classList.add('hidden');
+    // Show back button only if a locale is already active
+    const backWrap = document.getElementById('selector-back-wrap');
+    if (backWrap) backWrap.style.display = appDB.localeAttivoId ? 'block' : 'none';
+    renderLocaleList();
+}
+
+function renderLocaleList() {
+    const list = document.getElementById('locale-list');
+    if (!appDB.locali.length) {
+        list.innerHTML = `<div class="empty"><div class="empty-ico">🍴</div><div class="empty-txt">Nessun locale ancora. Creane uno!</div></div>`;
+        return;
+    }
+    list.innerHTML = appDB.locali.map(l => `
+        <div class="locale-card" onclick="selezionaLocale('${l.id}')">
+            <div>
+                <div class="locale-card-name">${esc(l.nome)}</div>
+                <div class="locale-card-meta">${l.ingredienti.length} ingredienti · ${l.piatti.length} piatti</div>
+            </div>
+            <span class="locale-card-arrow">→</span>
+        </div>
+    `).join('');
+}
+
+// ═══════════════════════════════════════════
+// AVVIO APP
+// ═══════════════════════════════════════════
+
+function avviaApp() {
+    const loc = localeAttivo();
+    if (!loc) { mostraSelector(); return; }
+
+    document.getElementById('screen-selector').classList.add('hidden');
+    document.getElementById('app-main').classList.remove('hidden');
+    document.getElementById('bottom-nav').classList.remove('hidden');
+
+    // Aggiorna nome locale in topbar e sidebar
+    document.getElementById('sb-locale-name').textContent = loc.nome;
+    document.getElementById('topbar-locale-name').textContent = '🍴 ' + loc.nome;
+
+    renderTutto();
+    switchTab('magazzino');
+}
+
+// ═══════════════════════════════════════════
+// NAVIGAZIONE
+// ═══════════════════════════════════════════
+
+const TABS = {
+    magazzino:  { title:'Magazzino Ingredienti',      desc:'Prezzi e rese degli ingredienti' },
+    ricettario: { title:'Distinta Base (Ricette)',     desc:'Composizione e costo di ogni piatto' },
+    dashboard:  { title:'Dashboard Prezzi & Margini', desc:'Analisi food cost e prezzi di vendita' }
+};
+
+function switchTab(name) {
+    Object.keys(TABS).forEach(t => {
+        document.getElementById('sec-' + t).classList.add('hidden');
+        document.getElementById('tab-' + t).classList.remove('active');
+        const bn = document.getElementById('bnav-' + t);
+        if (bn) bn.classList.remove('active');
+    });
+    document.getElementById('sec-' + name).classList.remove('hidden');
+    document.getElementById('tab-' + name).classList.add('active');
+    const bn = document.getElementById('bnav-' + name);
+    if (bn) bn.classList.add('active');
+    document.getElementById('page-title').textContent = TABS[name].title;
+    document.getElementById('page-desc').textContent  = TABS[name].desc;
+    document.getElementById('content-area').scrollTop = 0;
+    chiudiLocaleDropdown();
+}
+
+// ═══════════════════════════════════════════
+// MATEMATICA
+// ═══════════════════════════════════════════
+
+function cxg(ing) { return (ing.prezzoLordo / (ing.resa / 100)) / 1000; }
+
+function cxp(p) {
+    return p.ricetta.reduce((t, r) => {
+        const ing = db().ingredienti.find(x => x.id === r.ingId);
+        return t + (ing ? cxg(ing) * r.grammi : 0);
+    }, 0);
+}
+
+function esc(s) {
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function salva() { salvaDB(); renderTutto(); }
+
+// ═══════════════════════════════════════════
+// MAGAZZINO
+// ═══════════════════════════════════════════
+
+document.getElementById('form-ingrediente').addEventListener('submit', function(e) {
+    e.preventDefault();
+    db().ingredienti.push({
+        id: 'i' + Date.now(),
+        nome: document.getElementById('ing-nome').value.trim(),
+        prezzoLordo: parseFloat(document.getElementById('ing-prezzo').value),
+        resa: parseFloat(document.getElementById('ing-resa').value),
+        fornitore: document.getElementById('ing-fornitore').value.trim() || '—'
+    });
+    this.reset();
+    document.getElementById('ing-resa').value = 100;
+    salva();
 });
 
-function eliminaIngrediente(id){
-    if(!confirm('Eliminare questo ingrediente? Verrà rimosso anche dalle ricette.'))return;
-    db.ingredienti=db.ingredienti.filter(i=>i.id!==id);
-    db.piatti.forEach(p=>{p.ricetta=p.ricetta.filter(r=>r.ingId!==id)});
-    salva();
+function eliminaIngrediente(id) {
+    mostraConfirm('Eliminare questo ingrediente? Verrà rimosso anche dalle ricette.', () => {
+        db().ingredienti = db().ingredienti.filter(i => i.id !== id);
+        db().piatti.forEach(p => { p.ricetta = p.ricetta.filter(r => r.ingId !== id); });
+        salva();
+    });
 }
 
-function renderMagazzino(){
-    document.getElementById('cnt-mag').textContent=db.ingredienti.length;
-    document.getElementById('cnt-ric').textContent=db.piatti.length;
+function renderMagazzino() {
+    document.getElementById('cnt-mag').textContent = db().ingredienti.length;
+    document.getElementById('cnt-ric').textContent = db().piatti.length;
 
-    const n=db.ingredienti.length;
-    const med=n?(db.ingredienti.reduce((s,i)=>s+i.prezzoLordo,0)/n):0;
-    document.getElementById('stats-mag').innerHTML=`
+    const n = db().ingredienti.length;
+    const med = n ? (db().ingredienti.reduce((s,i) => s + i.prezzoLordo, 0) / n) : 0;
+    document.getElementById('stats-mag').innerHTML = `
         <div class="stat-pill"><div class="stat-pill-label">Ingredienti</div><div class="stat-pill-val accent">${n}</div><div class="stat-pill-sub">nel magazzino</div></div>
         <div class="stat-pill"><div class="stat-pill-label">Prezzo Medio</div><div class="stat-pill-val orange">€${med.toFixed(2)}</div><div class="stat-pill-sub">€/Kg lordo medio</div></div>
-        <div class="stat-pill"><div class="stat-pill-label">Piatti</div><div class="stat-pill-val green">${db.piatti.length}</div><div class="stat-pill-sub">in distinta base</div></div>
+        <div class="stat-pill"><div class="stat-pill-label">Piatti</div><div class="stat-pill-val green">${db().piatti.length}</div><div class="stat-pill-sub">in distinta base</div></div>
     `;
 
-    const tb=document.getElementById('lista-ingredienti');
-    if(!n){tb.innerHTML=`<tr><td colspan="7"><div class="empty"><div class="empty-ico">🧂</div><div class="empty-txt">Nessun ingrediente. Aggiungine uno sopra.</div></div></td></tr>`;return}
-    tb.innerHTML=db.ingredienti.map(i=>{
-        const cn=i.prezzoLordo/(i.resa/100);
-        return`<tr>
+    const tb = document.getElementById('lista-ingredienti');
+    const query = (document.getElementById('search-ingredienti')?.value || '').toLowerCase().trim();
+    const lista = [...db().ingredienti]
+        .sort((a,b) => a.nome.localeCompare(b.nome, 'it'))
+        .filter(i => !query || i.nome.toLowerCase().includes(query) || (i.fornitore||'').toLowerCase().includes(query));
+
+    if (!n) {
+        tb.innerHTML = `<tr><td colspan="7"><div class="empty"><div class="empty-ico">🧂</div><div class="empty-txt">Nessun ingrediente. Aggiungine uno sopra.</div></div></td></tr>`;
+        return;
+    }
+    if (!lista.length) {
+        tb.innerHTML = `<tr><td colspan="7"><div class="empty"><div class="empty-ico">🔍</div><div class="empty-txt">Nessun risultato per "<strong>${esc(query)}</strong>".</div></div></td></tr>`;
+        return;
+    }
+    tb.innerHTML = lista.map(i => {
+        const cn = i.prezzoLordo / (i.resa / 100);
+        return `<tr>
             <td class="td-name">${esc(i.nome)}</td>
-            <td class="td-muted">${esc(i.fornitore||'—')}</td>
+            <td class="td-muted">${esc(i.fornitore || '—')}</td>
             <td class="td-m">€ ${i.prezzoLordo.toFixed(2)}</td>
-            <td>${i.resa<100?`<span style="color:var(--yellow);font-weight:600">${i.resa}%</span>`:`<span style="color:var(--text3)">${i.resa}%</span>`}</td>
+            <td>${i.resa < 100 ? `<span style="color:var(--yellow);font-weight:600">${i.resa}%</span>` : `<span style="color:var(--text3)">${i.resa}%</span>`}</td>
             <td class="td-val">€ ${cn.toFixed(2)}</td>
             <td class="td-m" style="color:var(--text3);font-size:11px">€ ${(cn/1000).toFixed(4)}</td>
             <td><button onclick="eliminaIngrediente('${i.id}')" class="btn-del">✕</button></td>
-        </tr>`}).join('');
+        </tr>`;
+    }).join('');
 }
 
-// ═══ RICETTARIO ═══
-function creaNuovoPiatto(){
-    const n=document.getElementById('nuovo-piatto-nome').value.trim();
-    if(!n)return alert('Inserisci un nome per il piatto.');
-    db.piatti.push({id:'p'+Date.now(),nome:n,prezzoScelto:0,ricetta:[]});
-    document.getElementById('nuovo-piatto-nome').value='';salva();
-}
+// ═══════════════════════════════════════════
+// RICETTARIO
+// ═══════════════════════════════════════════
 
-function eliminaPiatto(id){
-    if(!confirm('Eliminare questa scheda piatto?'))return;
-    db.piatti=db.piatti.filter(p=>p.id!==id);salva();
-}
-
-function aggiungiIng(pid,sid,gid){
-    const ingId=document.getElementById(sid).value;
-    const gr=parseFloat(document.getElementById(gid).value);
-    if(!ingId||!gr||gr<=0)return alert('Seleziona un ingrediente e inserisci i grammi.');
-    const p=db.piatti.find(x=>x.id===pid);
-    const e=p.ricetta.find(r=>r.ingId===ingId);
-    if(e){e.grammi+=gr}else{p.ricetta.push({ingId,grammi:gr})}
+function creaNuovoPiatto() {
+    const nome = document.getElementById('nuovo-piatto-nome').value.trim();
+    if (!nome) return alert('Inserisci un nome per il piatto.');
+    db().piatti.push({ id:'p'+Date.now(), nome, prezzoScelto:0, ricetta:[] });
+    document.getElementById('nuovo-piatto-nome').value = '';
     salva();
 }
 
-function rimuoviIng(pid,iid){
-    const p=db.piatti.find(x=>x.id===pid);
-    p.ricetta=p.ricetta.filter(r=>r.ingId!==iid);salva();
+function eliminaPiatto(id) {
+    mostraConfirm('Eliminare questa scheda piatto?', () => {
+        db().piatti = db().piatti.filter(p => p.id !== id);
+        salva();
+    });
 }
 
-function renderRicettario(){
-    const c=document.getElementById('contenitore-piatti');
-    if(!db.piatti.length){c.innerHTML=`<div class="card"><div class="empty"><div class="empty-ico">🍽️</div><div class="empty-txt">Nessun piatto. Creane uno sopra.</div></div></div>`;return}
-    const opts='<option value="">— Seleziona ingrediente —</option>'+db.ingredienti.map(i=>`<option value="${i.id}">${esc(i.nome)}</option>`).join('');
-    c.innerHTML=db.piatti.map(p=>{
-        const costo=cxp(p);
-        const righe=!p.ricetta.length
-            ?`<tr><td colspan="4"><div class="empty" style="padding:20px"><div class="empty-txt">Nessun ingrediente aggiunto.</div></div></td></tr>`
-            :p.ricetta.map(r=>{
-                const i=db.ingredienti.find(x=>x.id===r.ingId);
-                if(!i)return'';
-                return`<tr>
+function aggiungiIng(pid, sid, gid) {
+    const ingId = document.getElementById(sid).value;
+    const grammi = parseFloat(document.getElementById(gid).value);
+    if (!ingId || !grammi || grammi <= 0) return alert('Seleziona un ingrediente e inserisci i grammi.');
+    const p = db().piatti.find(x => x.id === pid);
+    const e = p.ricetta.find(r => r.ingId === ingId);
+    if (e) { e.grammi += grammi; } else { p.ricetta.push({ ingId, grammi }); }
+    salva();
+}
+
+function rimuoviIng(pid, iid) {
+    const p = db().piatti.find(x => x.id === pid);
+    p.ricetta = p.ricetta.filter(r => r.ingId !== iid);
+    salva();
+}
+
+
+function renderRicettario() {
+    const c = document.getElementById('contenitore-piatti');
+    if (!db().piatti.length) {
+        c.innerHTML = `<div class="card"><div class="empty"><div class="empty-ico">🍽️</div><div class="empty-txt">Nessun piatto. Creane uno sopra.</div></div></div>`;
+        return;
+    }
+    const ingOrdinati = [...db().ingredienti].sort((a,b) => a.nome.localeCompare(b.nome, 'it'));
+    const opts = '<option value="">— Seleziona ingrediente —</option>'
+        + ingOrdinati.map(i => `<option value="${i.id}">${esc(i.nome)}</option>`).join('');
+
+    c.innerHTML = db().piatti.map(p => {
+        const costo = cxp(p);
+        const righe = !p.ricetta.length
+            ? `<tr><td colspan="4"><div class="empty" style="padding:20px"><div class="empty-txt">Nessun ingrediente aggiunto.</div></div></td></tr>`
+            : p.ricetta.map(r => {
+                const i = db().ingredienti.find(x => x.id === r.ingId);
+                if (!i) return '';
+                return `<tr>
                     <td class="td-name">${esc(i.nome)}</td>
                     <td class="td-m">${r.grammi} g</td>
                     <td class="td-m">€ ${(cxg(i)*r.grammi).toFixed(3)}</td>
                     <td><button onclick="rimuoviIng('${p.id}','${i.id}')" class="btn-del" style="padding:4px 7px;font-size:12px">✕</button></td>
-                </tr>`}).join('');
-        return`<div class="recipe-card">
+                </tr>`;
+            }).join('');
+
+        return `<div class="recipe-card">
             <div class="recipe-head">
                 <div class="recipe-head-left">
                     <div class="recipe-ico">🍽️</div>
                     <div>
                         <div class="recipe-name">${esc(p.nome)}</div>
-                        <div class="recipe-meta">Costo MP: <span style="color:var(--accent2);font-family:'JetBrains Mono',monospace;font-weight:600">€ ${costo.toFixed(3)}</span></div>
+                        <div class="recipe-meta">Costo MP: <span style="color:var(--accent);font-family:'JetBrains Mono',monospace;font-weight:600">€ ${costo.toFixed(3)}</span></div>
                     </div>
                 </div>
                 <button onclick="eliminaPiatto('${p.id}')" class="btn-link-del">Elimina</button>
@@ -522,62 +1150,97 @@ function renderRicettario(){
                         <thead><tr><th>Ingrediente</th><th>Grammi</th><th>Costo</th><th></th></tr></thead>
                         <tbody>${righe}</tbody>
                         <tfoot><tr>
-                            <td colspan="2" style="text-align:right;font-size:10px;color:var(--text3);font-weight:700;text-transform:uppercase;letter-spacing:0.8px">Totale Materie Prime</td>
+                            <td colspan="2" style="text-align:right;font-size:10px;color:var(--text3);font-weight:700;text-transform:uppercase;letter-spacing:0.8px">Totale MP</td>
                             <td class="td-val" colspan="2">€ ${costo.toFixed(3)}</td>
                         </tr></tfoot>
                     </table>
                 </div>
                 <div class="add-row">
-                    <div class="field"><label>Ingrediente</label><select id="sel-${p.id}">${opts}</select></div>
+                    <div class="field" style="flex:1">
+                        <label>Cerca e seleziona ingrediente</label>
+                        <input type="text" id="search-${p.id}" placeholder="🔍 Scrivi per cercare..." list="dl-${p.id}" autocomplete="off">
+                        <datalist id="dl-${p.id}">${ingOrdinati.map(i=>`<option value="${esc(i.nome)}" data-id="${i.id}">`).join('')}</datalist>
+                        <select id="sel-${p.id}" style="margin-top:6px">${opts}</select>
+                    </div>
                     <div class="field fsm"><label>Grammi</label><input type="number" id="gr-${p.id}" min="1" placeholder="g"></div>
                     <div class="field fbtn"><label>&nbsp;</label><button onclick="aggiungiIng('${p.id}','sel-${p.id}','gr-${p.id}')" class="btn btn-p">+ Aggiungi</button></div>
                 </div>
             </div>
-        </div>`}).join('');
+        </div>`;
+    }).join('');
+
+    // Bind search inputs after render
+    db().piatti.forEach(p => {
+        const searchEl = document.getElementById('search-' + p.id);
+        const selEl    = document.getElementById('sel-' + p.id);
+        if (!searchEl || !selEl) return;
+        searchEl.addEventListener('input', function() {
+            const val = this.value.toLowerCase().trim();
+            // Sync select: filter options
+            const ingOrdinati = [...db().ingredienti].sort((a,b) => a.nome.localeCompare(b.nome,'it'));
+            const filtrati = ingOrdinati.filter(i => !val || i.nome.toLowerCase().includes(val));
+            selEl.innerHTML = '<option value="">— Seleziona ingrediente —</option>'
+                + filtrati.map(i => `<option value="${i.id}">${esc(i.nome)}</option>`).join('');
+            if (filtrati.length === 1) selEl.selectedIndex = 1;
+            // If exact datalist match, auto-select
+            const exact = db().ingredienti.find(i => i.nome.toLowerCase() === val);
+            if (exact) selEl.value = exact.id;
+        });
+    });
 }
 
-// ═══ DASHBOARD ═══
-function aggiornaPrezzoFinale(pid,el){
-    const p=db.piatti.find(x=>x.id===pid);
-    p.prezzoScelto=parseFloat(el.value)||0;
-    localStorage.setItem('fcDB_v3',JSON.stringify(db));
+// ═══════════════════════════════════════════
+// DASHBOARD
+// ═══════════════════════════════════════════
+
+function aggiornaPrezzoFinale(pid, el) {
+    const p = db().piatti.find(x => x.id === pid);
+    p.prezzoScelto = parseFloat(el.value) || 0;
+    salvaDB();
     renderDashboard();
 }
-function aggiornaDashboard(){renderDashboard()}
 
-function renderDashboard(){
-    const fc=parseFloat(document.getElementById('global-fc-target').value)/100||0.30;
-    const iva=parseFloat(document.getElementById('global-iva').value)/100||0.10;
-    const pf=db.piatti.filter(p=>cxp(p)>0);
+function aggiornaDashboard() { renderDashboard(); }
 
-    // Stats
-    const sd=document.getElementById('stats-dash');
-    if(pf.length){
-        const fcv=pf.map(p=>{const c=cxp(p),ps=p.prezzoScelto>0?p.prezzoScelto:(c/fc)*(1+iva);return(c/(ps/(1+iva)))*100});
-        const med=fcv.reduce((a,b)=>a+b,0)/fcv.length;
-        const ok=fcv.filter(v=>v<=fc*100).length;
-        sd.innerHTML=`
+function renderDashboard() {
+    const fc  = parseFloat(document.getElementById('global-fc-target').value) / 100 || 0.30;
+    const iva = parseFloat(document.getElementById('global-iva').value) / 100 || 0.10;
+    const pf  = db().piatti.filter(p => cxp(p) > 0);
+
+    const sd = document.getElementById('stats-dash');
+    if (pf.length) {
+        const fcv = pf.map(p => {
+            const c = cxp(p), ps = p.prezzoScelto > 0 ? p.prezzoScelto : (c/fc)*(1+iva);
+            return (c / (ps/(1+iva))) * 100;
+        });
+        const med = fcv.reduce((a,b) => a+b, 0) / fcv.length;
+        const ok  = fcv.filter(v => v <= fc*100).length;
+        sd.innerHTML = `
             <div class="stat-pill"><div class="stat-pill-label">Piatti analizzati</div><div class="stat-pill-val accent">${pf.length}</div><div class="stat-pill-sub">con ricetta completa</div></div>
             <div class="stat-pill"><div class="stat-pill-label">Food Cost Medio</div><div class="stat-pill-val ${med>fc*100?'red':'green'}" style="font-size:20px">${med.toFixed(1)}%</div><div class="stat-pill-sub">obiettivo: ${(fc*100).toFixed(0)}%</div></div>
             <div class="stat-pill"><div class="stat-pill-label">In Margine</div><div class="stat-pill-val green">${ok}/${pf.length}</div><div class="stat-pill-sub">piatti in target</div></div>
         `;
-    }else{sd.innerHTML=''}
+    } else { sd.innerHTML = ''; }
 
-    const tb=document.getElementById('lista-dashboard');
-    if(!pf.length){tb.innerHTML=`<tr><td colspan="7"><div class="empty"><div class="empty-ico">📊</div><div class="empty-txt">Nessun piatto con ingredienti. Vai nella Distinta Base e componi le ricette.</div></div></td></tr>`;return}
+    const tb = document.getElementById('lista-dashboard');
+    if (!pf.length) {
+        tb.innerHTML = `<tr><td colspan="7"><div class="empty"><div class="empty-ico">📊</div><div class="empty-txt">Nessun piatto con ingredienti. Vai nella Distinta Base e componi le ricette.</div></div></td></tr>`;
+        return;
+    }
 
-    tb.innerHTML=pf.map(p=>{
-        const c=cxp(p);
-        const pnn=c/fc;
-        const pic=pnn*(1+iva);
-        const ps=p.prezzoScelto>0?p.prezzoScelto:pic;
-        const fcr=(c/(ps/(1+iva)))*100;
-        const fcp=fc*100;
-        let badge,cls;
-        if(fcr<=fcp){badge=`<span class="badge green">✓ Margine OK</span>`;cls='fc-ok'}
-        else if(fcr<=fcp+5){badge=`<span class="badge yellow">⚠ Attenzione</span>`;cls='fc-warn'}
-        else{badge=`<span class="badge red">✕ Rischio</span>`;cls='fc-bad'}
-        return`<tr>
+    tb.innerHTML = pf.map(p => {
+        const c   = cxp(p);
+        const pnn = c / fc;
+        const pic = pnn * (1 + iva);
+        const ps  = p.prezzoScelto > 0 ? p.prezzoScelto : pic;
+        const fcr = (c / (ps/(1+iva))) * 100;
+        const fcp = fc * 100;
+        let badge, cls;
+        if (fcr <= fcp)       { badge = `<span class="badge green">✓ Margine OK</span>`;   cls = 'fc-ok'; }
+        else if (fcr <= fcp+5){ badge = `<span class="badge yellow">⚠ Attenzione</span>`; cls = 'fc-warn'; }
+        else                  { badge = `<span class="badge red">✕ Rischio</span>`;        cls = 'fc-bad'; }
+
+        return `<tr>
             <td class="td-name">${esc(p.nome)}</td>
             <td class="td-m">€ ${c.toFixed(2)}</td>
             <td class="td-m" style="color:var(--text3)">€ ${pnn.toFixed(2)}</td>
@@ -585,12 +1248,35 @@ function renderDashboard(){
             <td><div class="price-wrap"><span class="sym">€</span><input type="number" value="${ps.toFixed(2)}" step="0.50" min="0" onchange="aggiornaPrezzoFinale('${p.id}',this)"></div></td>
             <td class="${cls}">${fcr.toFixed(1)}%</td>
             <td>${badge}</td>
-        </tr>`}).join('');
+        </tr>`;
+    }).join('');
 }
 
-// ═══ INIT ═══
-function renderTutto(){renderMagazzino();renderRicettario();renderDashboard()}
-renderTutto();
+// ═══════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════
+
+function renderTutto() {
+    renderMagazzino();
+    renderRicettario();
+    renderDashboard();
+}
+
+// Chiudi dropdown cliccando fuori
+document.addEventListener('click', function(e) {
+    const dd = document.getElementById('locale-dropdown');
+    const lc = document.querySelector('.locale-current');
+    if (!dd.classList.contains('hidden') && !dd.contains(e.target) && !lc.contains(e.target)) {
+        chiudiLocaleDropdown();
+    }
+});
+
+// Avvio
+if (appDB.locali.length === 0 || !appDB.localeAttivoId) {
+    mostraSelector();
+} else {
+    avviaApp();
+}
 </script>
 
 </body>
