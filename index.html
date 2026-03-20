@@ -609,6 +609,25 @@
         <!-- MAGAZZINO -->
         <div id="sec-magazzino">
             <div class="stats-row" id="stats-mag"></div>
+
+            <!-- SCANSIONE FATTURA AI -->
+            <div class="card" style="border-color:rgba(139,92,246,0.3);background:linear-gradient(135deg,rgba(139,92,246,0.05),var(--surface))">
+                <div class="card-title" style="color:#7c3aed">📷 Scansione Fattura AI <span class="ctag" style="background:rgba(139,92,246,0.1);color:#7c3aed">beta</span></div>
+                <div class="card-sub">Scatta una foto alla fattura del fornitore — l'AI rileva automaticamente ingredienti e prezzi</div>
+                <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+                    <label for="input-fattura" class="btn" style="background:#7c3aed;color:#fff;box-shadow:0 2px 10px rgba(124,58,237,0.3);cursor:pointer">
+                        📷 Scatta / Carica Fattura
+                    </label>
+                    <input type="file" id="input-fattura" accept="image/*" capture="environment" style="display:none" onchange="analizzaFattura(this)">
+                    <span id="fattura-status" style="font-size:12px;color:var(--text3)"></span>
+                </div>
+                <!-- Preview e risultati AI -->
+                <div id="fattura-preview-wrap" style="display:none;margin-top:14px">
+                    <img id="fattura-preview" style="max-width:100%;max-height:200px;border-radius:8px;border:1px solid var(--border);object-fit:contain;display:block;margin-bottom:12px">
+                    <div id="fattura-risultati"></div>
+                </div>
+            </div>
+
             <div class="card ta">
                 <div class="card-title">Aggiungi Ingrediente <span class="ctag">nuovo</span></div>
                 <div class="card-sub">Inserisci prezzi IVA esclusa dalla fattura del fornitore</div>
@@ -757,6 +776,20 @@
     </div>
 </div>
 
+<!-- MODAL IMPORT INGREDIENTI DA FATTURA -->
+
+<div class="modal-overlay hidden" id="modal-import-overlay" style="align-items:flex-end;padding:0">
+    <div class="modal" style="border-radius:var(--r3) var(--r3) 0 0;max-width:100%;width:100%;max-height:80vh;overflow-y:auto">
+        <div class="modal-title">📋 Ingredienti Trovati</div>
+        <div class="modal-sub">Seleziona quelli da importare nel magazzino. Puoi modificare i valori prima di confermare.</div>
+        <div id="import-lista" style="margin-top:4px"></div>
+        <div class="modal-actions" style="position:sticky;bottom:0;background:var(--surface);padding-top:12px">
+            <button class="btn btn-cancel" onclick="chiudiImport()">Annulla</button>
+            <button class="btn btn-p" onclick="confermaImport()">Importa Selezionati</button>
+        </div>
+    </div>
+</div>
+
 <!-- MODAL MODIFICA INGREDIENTE -->
 
 <div class="modal-overlay hidden" id="modal-modifica-overlay">
@@ -859,6 +892,173 @@ function localeAttivo() {
 }
 
 function db() { return localeAttivo(); }
+
+// ═══════════════════════════════════════════
+// AI SCANSIONE FATTURA
+// ═══════════════════════════════════════════
+let _importCandidates = [];
+
+async function analizzaFattura(input) {
+    const file = input.files[0];
+    if (!file) return;
+
+    const status = document.getElementById('fattura-status');
+    const previewWrap = document.getElementById('fattura-preview-wrap');
+    const preview = document.getElementById('fattura-preview');
+
+    // Mostra preview immagine
+    const reader = new FileReader();
+    reader.onload = async function(e) {
+        const base64 = e.target.result.split(',')[1];
+        const mediaType = file.type || 'image/jpeg';
+
+        preview.src = e.target.result;
+        previewWrap.style.display = 'block';
+        status.textContent = '🔍 Analisi in corso...';
+        status.style.color = 'var(--accent)';
+
+        try {
+            const response = await fetch('https://api.anthropic.com/v1/messages', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    model: 'claude-sonnet-4-20250514',
+                    max_tokens: 1500,
+                    messages: [{
+                        role: 'user',
+                        content: [
+                            {
+                                type: 'image',
+                                source: { type: 'base64', media_type: mediaType, data: base64 }
+                            },
+                            {
+                                type: 'text',
+                                text: `Analizza questa fattura di un fornitore alimentare italiano. 
+Estrai tutti gli ingredienti/prodotti alimentari con i loro prezzi.
+Rispondi SOLO con un JSON valido, senza testo aggiuntivo, nel formato:
+{
+  "fornitore": "nome fornitore se visibile o stringa vuota",
+  "ingredienti": [
+    {
+      "nome": "nome prodotto",
+      "prezzoKg": 0.00,
+      "unitaMisura": "kg o lt o pz",
+      "note": "descrizione aggiuntiva se utile"
+    }
+  ]
+}
+Se il prezzo è per unità o confezione (non al kg), calcola o stima il prezzo al kg se possibile, altrimenti usa il prezzo unitario e indicalo nelle note.
+Includi solo prodotti alimentari, ignora spese di spedizione, IVA separata, sconti generici.
+Se non riesci a leggere la fattura, restituisci {"fornitore":"","ingredienti":[]}.`
+                            }
+                        ]
+                    }]
+                })
+            });
+
+            const data = await response.json();
+            const testo = data.content?.[0]?.text || '{}';
+
+            let parsed;
+            try {
+                const clean = testo.replace(/```json|```/g, '').trim();
+                parsed = JSON.parse(clean);
+            } catch {
+                throw new Error('Risposta AI non leggibile');
+            }
+
+            if (!parsed.ingredienti || parsed.ingredienti.length === 0) {
+                status.textContent = '⚠️ Nessun ingrediente trovato. Prova con una foto più nitida.';
+                status.style.color = 'var(--yellow)';
+                return;
+            }
+
+            status.textContent = `✅ Trovati ${parsed.ingredienti.length} ingredienti!`;
+            status.style.color = 'var(--green)';
+
+            // Mostra modal di importazione
+            mostraImport(parsed.fornitore || '', parsed.ingredienti);
+
+        } catch (err) {
+            status.textContent = '❌ Errore analisi. Riprova con una foto più chiara.';
+            status.style.color = 'var(--red)';
+            console.error(err);
+        }
+
+        // Reset input file per permettere di ricaricare la stessa foto
+        input.value = '';
+    };
+    reader.readAsDataURL(file);
+}
+
+function mostraImport(fornitore, ingredienti) {
+    _importCandidates = ingredienti;
+    const lista = document.getElementById('import-lista');
+
+    lista.innerHTML = ingredienti.map((ing, idx) => `
+        <div style="border:1px solid var(--border);border-radius:var(--r2);padding:12px;margin-bottom:10px;background:var(--surface2)">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+                <input type="checkbox" id="imp-check-${idx}" checked style="width:18px;height:18px;cursor:pointer;accent-color:var(--accent)">
+                <label for="imp-check-${idx}" style="font-weight:600;font-size:14px;cursor:pointer;color:var(--text)">${esc(ing.nome)}</label>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+                <div class="field">
+                    <label>Prezzo €/Kg</label>
+                    <input type="number" id="imp-prezzo-${idx}" value="${(ing.prezzoKg||0).toFixed(2)}" step="0.01" min="0">
+                </div>
+                <div class="field">
+                    <label>Resa %</label>
+                    <input type="number" id="imp-resa-${idx}" value="100" step="1" min="1" max="100">
+                </div>
+                <div class="field" style="grid-column:1/-1">
+                    <label>Fornitore</label>
+                    <input type="text" id="imp-forn-${idx}" value="${esc(fornitore)}">
+                </div>
+            </div>
+            ${ing.note ? `<div style="font-size:11px;color:var(--text3);margin-top:6px">ℹ️ ${esc(ing.note)}</div>` : ''}
+        </div>
+    `).join('');
+
+    document.getElementById('modal-import-overlay').classList.remove('hidden');
+}
+
+function chiudiImport() {
+    document.getElementById('modal-import-overlay').classList.add('hidden');
+    _importCandidates = [];
+}
+
+function confermaImport() {
+    let importati = 0;
+    _importCandidates.forEach((ing, idx) => {
+        const checked = document.getElementById(`imp-check-${idx}`)?.checked;
+        if (!checked) return;
+        const prezzo = parseFloat(document.getElementById(`imp-prezzo-${idx}`)?.value) || 0;
+        const resa   = parseFloat(document.getElementById(`imp-resa-${idx}`)?.value) || 100;
+        const forn   = document.getElementById(`imp-forn-${idx}`)?.value.trim() || '—';
+        if (!ing.nome || prezzo <= 0) return;
+        // Controlla se esiste già (per nome simile)
+        const esiste = db().ingredienti.find(i => i.nome.toLowerCase() === ing.nome.toLowerCase());
+        if (esiste) {
+            // Aggiorna prezzo e resa
+            esiste.prezzoLordo = prezzo;
+            esiste.resa = resa;
+            esiste.fornitore = forn;
+        } else {
+            db().ingredienti.push({
+                id: 'i' + Date.now() + idx,
+                nome: ing.nome,
+                prezzoLordo: prezzo,
+                resa: resa,
+                fornitore: forn
+            });
+        }
+        importati++;
+    });
+    chiudiImport();
+    salva();
+    document.getElementById('fattura-status').textContent = `✅ ${importati} ingredienti importati nel magazzino!`;
+    document.getElementById('fattura-status').style.color = 'var(--green)';
+}
 
 // ═══════════════════════════════════════════
 // GESTIONE LOCALI
