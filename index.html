@@ -757,6 +757,37 @@
     </div>
 </div>
 
+<!-- MODAL MODIFICA INGREDIENTE -->
+
+<div class="modal-overlay hidden" id="modal-modifica-overlay">
+    <div class="modal">
+        <div class="modal-title">Modifica Ingrediente</div>
+        <div class="modal-sub" id="modifica-ing-nome-label">—</div>
+        <div style="display:flex;flex-direction:column;gap:12px;margin-top:4px">
+            <div class="field">
+                <label>Nome Ingrediente</label>
+                <input type="text" id="mod-nome" placeholder="Nome">
+            </div>
+            <div class="field">
+                <label>Prezzo Lordo €/Kg</label>
+                <input type="number" id="mod-prezzo" step="0.01" min="0" placeholder="0.00">
+            </div>
+            <div class="field">
+                <label>Resa Netta %</label>
+                <input type="number" id="mod-resa" step="1" min="1" max="100" placeholder="100">
+            </div>
+            <div class="field">
+                <label>Fornitore</label>
+                <input type="text" id="mod-fornitore" placeholder="opzionale">
+            </div>
+        </div>
+        <div class="modal-actions">
+            <button class="btn btn-cancel" onclick="chiudiModificaIngrediente()">Annulla</button>
+            <button class="btn btn-p" onclick="salvaModificaIngrediente()">Salva</button>
+        </div>
+    </div>
+</div>
+
 <!-- MODAL CONFERMA ELIMINA -->
 
 <div class="modal-overlay hidden" id="confirm-overlay">
@@ -1024,6 +1055,42 @@ document.getElementById('form-ingrediente').addEventListener('submit', function(
     salva();
 });
 
+let _modIngId = null;
+
+function apriModificaIngrediente(id) {
+    const i = db().ingredienti.find(x => x.id === id);
+    if (!i) return;
+    _modIngId = id;
+    document.getElementById('modifica-ing-nome-label').textContent = i.nome;
+    document.getElementById('mod-nome').value     = i.nome;
+    document.getElementById('mod-prezzo').value   = i.prezzoLordo;
+    document.getElementById('mod-resa').value     = i.resa;
+    document.getElementById('mod-fornitore').value = i.fornitore || '';
+    document.getElementById('modal-modifica-overlay').classList.remove('hidden');
+}
+
+function chiudiModificaIngrediente() {
+    document.getElementById('modal-modifica-overlay').classList.add('hidden');
+    _modIngId = null;
+}
+
+function salvaModificaIngrediente() {
+    if (!_modIngId) return;
+    const i = db().ingredienti.find(x => x.id === _modIngId);
+    if (!i) return;
+    const nome    = document.getElementById('mod-nome').value.trim();
+    const prezzo  = parseFloat(document.getElementById('mod-prezzo').value);
+    const resa    = parseFloat(document.getElementById('mod-resa').value);
+    const forn    = document.getElementById('mod-fornitore').value.trim();
+    if (!nome || isNaN(prezzo) || isNaN(resa)) return alert('Compila tutti i campi obbligatori.');
+    i.nome        = nome;
+    i.prezzoLordo = prezzo;
+    i.resa        = resa;
+    i.fornitore   = forn || '—';
+    chiudiModificaIngrediente();
+    salva();
+}
+
 function eliminaIngrediente(id) {
     mostraConfirm('Eliminare questo ingrediente? Verrà rimosso anche dalle ricette.', () => {
         db().ingredienti = db().ingredienti.filter(i => i.id !== id);
@@ -1067,7 +1134,10 @@ function renderMagazzino() {
             <td>${i.resa < 100 ? `<span style="color:var(--yellow);font-weight:600">${i.resa}%</span>` : `<span style="color:var(--text3)">${i.resa}%</span>`}</td>
             <td class="td-val">€ ${cn.toFixed(2)}</td>
             <td class="td-m" style="color:var(--text3);font-size:11px">€ ${(cn/1000).toFixed(4)}</td>
-            <td><button onclick="eliminaIngrediente('${i.id}')" class="btn-del">✕</button></td>
+            <td style="display:flex;gap:6px">
+                <button onclick="apriModificaIngrediente('${i.id}')" class="btn-del" style="color:var(--accent);border-color:var(--aborder)" title="Modifica">✏️</button>
+                <button onclick="eliminaIngrediente('${i.id}')" class="btn-del" title="Elimina">✕</button>
+            </td>
         </tr>`;
     }).join('');
 }
