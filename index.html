@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="it">
 <head>
     <meta charset="UTF-8">
@@ -53,474 +52,468 @@
             --shadow2:  0 4px 12px rgba(0,0,0,0.08);
         }
 
-```
-    *,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+        *,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
 
-    html, body {
-        height:100%; height:100dvh;
-        font-family:'Outfit',sans-serif;
-        background:var(--bg);
-        color:var(--text);
-        font-size:14px;
-        line-height:1.55;
-        -webkit-font-smoothing:antialiased;
-    }
-
-    /* ── LAYOUT ── */
-    .app { display:flex; height:100vh; height:100dvh; overflow:hidden; }
-
-    /* ── SIDEBAR ── */
-    .sidebar {
-        width:var(--sidebar);
-        background:var(--surface);
-        border-right:1px solid var(--border);
-        display:flex; flex-direction:column;
-        flex-shrink:0;
-    }
-
-    .sb-brand {
-        padding:18px 16px 16px;
-        border-bottom:1px solid var(--border);
-    }
-
-    .sb-logo {
-        width:38px; height:38px;
-        background:linear-gradient(135deg,#4f46e5,#7c3aed);
-        border-radius:10px;
-        display:flex; align-items:center; justify-content:center;
-        font-size:20px; margin-bottom:10px;
-        box-shadow:0 4px 12px rgba(79,70,229,0.3);
-    }
-
-    .sb-name { font-size:14px; font-weight:700; color:var(--text); letter-spacing:-0.3px; }
-    .sb-tag  { font-size:11px; color:var(--text3); margin-top:1px; }
-
-    /* LOCALE SWITCHER */
-    .sb-locale {
-        padding:10px;
-        border-bottom:1px solid var(--border);
-    }
-
-    .locale-label {
-        font-size:9px; font-weight:700; text-transform:uppercase;
-        letter-spacing:1.5px; color:var(--text3);
-        padding:0 8px 5px;
-    }
-
-    .locale-current {
-        display:flex; align-items:center; justify-content:space-between;
-        padding:8px 10px;
-        background:var(--asoft);
-        border:1px solid var(--aborder);
-        border-radius:var(--r);
-        cursor:pointer;
-        transition:all .15s;
-    }
-    .locale-current:hover { background:rgba(79,70,229,0.12); }
-
-    .locale-name {
-        font-size:13px; font-weight:600; color:var(--accent);
-        white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
-        max-width:140px;
-    }
-
-    .locale-chevron { color:var(--accent); font-size:10px; flex-shrink:0; }
-
-    .locale-dropdown {
-        background:var(--surface);
-        border:1px solid var(--border);
-        border-radius:var(--r);
-        margin-top:6px;
-        overflow:hidden;
-        box-shadow:var(--shadow2);
-    }
-
-    .locale-item {
-        display:flex; align-items:center; justify-content:space-between;
-        padding:10px 12px;
-        cursor:pointer;
-        font-size:13px; font-weight:500; color:var(--text2);
-        border-bottom:1px solid var(--border);
-        transition:background .1s;
-    }
-    .locale-item:last-child { border-bottom:none; }
-    .locale-item:hover { background:var(--surface3); }
-    .locale-item.active { color:var(--accent); font-weight:600; }
-    .locale-item-check { color:var(--accent); font-size:13px; }
-
-    .btn-add-locale {
-        display:flex; align-items:center; gap:6px;
-        width:100%; padding:9px 12px;
-        background:none; border:none;
-        color:var(--accent); font-size:12px; font-weight:600;
-        cursor:pointer; font-family:'Outfit',sans-serif;
-        border-top:1px solid var(--border);
-        transition:background .15s;
-    }
-    .btn-add-locale:hover { background:var(--asoft); }
-
-    /* NAV */
-    .sb-nav { padding:10px; flex:1; }
-
-    .nav-section-label {
-        font-size:9px; font-weight:700; text-transform:uppercase;
-        letter-spacing:1.5px; color:var(--text3);
-        padding:8px 8px 4px;
-    }
-
-    .nav-btn {
-        display:flex; align-items:center; gap:10px;
-        width:100%; padding:9px 10px;
-        border-radius:var(--r);
-        background:none; border:none;
-        color:var(--text2); font-size:13px; font-weight:500;
-        cursor:pointer; font-family:'Outfit',sans-serif;
-        transition:all .15s; text-align:left;
-        margin-bottom:1px;
-    }
-    .nav-btn:hover { background:var(--surface3); color:var(--text); }
-    .nav-btn.active { background:var(--asoft); color:var(--accent); border:1px solid var(--aborder); }
-
-    .nav-ico {
-        width:30px; height:30px; border-radius:7px;
-        display:flex; align-items:center; justify-content:center;
-        font-size:15px; background:var(--surface3); flex-shrink:0;
-    }
-    .nav-btn.active .nav-ico { background:var(--asoft); }
-
-    .nav-count {
-        margin-left:auto;
-        font-family:'JetBrains Mono',monospace;
-        font-size:10px; font-weight:600; color:var(--text3);
-        background:var(--surface3); padding:1px 6px; border-radius:99px;
-    }
-    .nav-btn.active .nav-count { color:var(--accent); background:var(--asoft); }
-
-    .sb-footer {
-        padding:10px; border-top:1px solid var(--border);
-    }
-
-    .btn-reset-sb {
-        display:flex; align-items:center; gap:8px;
-        width:100%; padding:8px 10px;
-        border-radius:var(--r); background:none; border:none;
-        color:var(--text3); font-size:12px; font-weight:500;
-        cursor:pointer; font-family:'Outfit',sans-serif; transition:all .15s;
-    }
-    .btn-reset-sb:hover { background:var(--rsoft); color:var(--red); }
-
-    /* ── MAIN ── */
-    .main { flex:1; display:flex; flex-direction:column; overflow:hidden; min-width:0; }
-
-    .topbar {
-        height:58px; background:var(--surface);
-        border-bottom:1px solid var(--border);
-        padding:0 24px;
-        display:flex; align-items:center; justify-content:space-between;
-        flex-shrink:0; box-shadow:var(--shadow);
-    }
-
-    .page-title { font-size:15px; font-weight:700; letter-spacing:-0.3px; }
-    .page-desc  { font-size:11px; color:var(--text3); margin-top:1px; }
-
-    .topbar-locale {
-        display:flex; align-items:center; gap:6px;
-        padding:6px 12px;
-        background:var(--asoft); border:1px solid var(--aborder);
-        border-radius:99px; font-size:12px; font-weight:600; color:var(--accent);
-    }
-
-    .content { flex:1; overflow-y:auto; padding:22px 24px 60px; }
-
-    /* ── STAT PILLS ── */
-    .stats-row {
-        display:grid;
-        grid-template-columns:repeat(auto-fit, minmax(130px,1fr));
-        gap:10px; margin-bottom:18px;
-    }
-
-    .stat-pill {
-        background:var(--surface); border:1px solid var(--border);
-        border-radius:var(--r2); padding:14px 16px;
-        box-shadow:var(--shadow);
-    }
-    .stat-pill-label { font-size:10px; color:var(--text3); font-weight:600; text-transform:uppercase; letter-spacing:0.8px; margin-bottom:5px; }
-    .stat-pill-val   { font-size:24px; font-weight:700; font-family:'JetBrains Mono',monospace; letter-spacing:-1.5px; }
-    .stat-pill-val.accent { color:var(--accent2); }
-    .stat-pill-val.green  { color:var(--green); }
-    .stat-pill-val.orange { color:var(--orange); }
-    .stat-pill-val.red    { color:var(--red); }
-    .stat-pill-sub { font-size:11px; color:var(--text3); margin-top:2px; }
-
-    /* ── CARD ── */
-    .card {
-        background:var(--surface); border:1px solid var(--border);
-        border-radius:var(--r3); padding:20px; margin-bottom:14px;
-        box-shadow:var(--shadow);
-    }
-    .card.ta { background:var(--surface); border-color:var(--aborder); border-left:3px solid var(--accent); }
-    .card.tg { background:var(--surface); border-color:rgba(5,150,105,0.25); border-left:3px solid var(--green); }
-    .card.to { background:var(--surface); border-color:rgba(234,88,12,0.25); border-left:3px solid var(--orange); }
-
-    .card-title { font-size:13px; font-weight:700; color:var(--text); display:flex; align-items:center; gap:8px; margin-bottom:14px; }
-    .ctag { font-size:10px; font-weight:600; padding:2px 8px; border-radius:99px; background:var(--asoft); color:var(--accent); }
-    .card-sub { font-size:11px; color:var(--text3); margin-top:-8px; margin-bottom:16px; }
-
-    /* ── FORM ── */
-    .field { display:flex; flex-direction:column; gap:5px; }
-    .field label { font-size:10px; font-weight:700; color:var(--text3); text-transform:uppercase; letter-spacing:0.8px; }
-
-    input[type="text"],
-    input[type="number"],
-    select {
-        width:100%;
-        padding:9px 12px;
-        background:var(--surface2);
-        border:1px solid var(--border2);
-        border-radius:var(--r);
-        color:var(--text);
-        font-family:'Outfit',sans-serif;
-        font-size:13px; font-weight:400;
-        transition:border-color .15s, box-shadow .15s;
-        -webkit-appearance:none; appearance:none;
-    }
-    input::placeholder { color:var(--text3); }
-    input:focus, select:focus {
-        outline:none; border-color:var(--accent);
-        box-shadow:0 0 0 3px var(--asoft);
-        background:var(--surface);
-    }
-    select {
-        background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%239ca3af'/%3E%3C/svg%3E");
-        background-repeat:no-repeat; background-position:right 12px center;
-        padding-right:32px; cursor:pointer;
-    }
-
-    .form-grid { display:grid; gap:12px; align-items:end; }
-    .fg5 { grid-template-columns:2fr 1.2fr 1fr 1fr auto; }
-    .fg2 { grid-template-columns:1fr auto; }
-
-    @media(max-width:860px) {
-        .fg5 { grid-template-columns:1fr 1fr; }
-        .fg5 .btn-col { grid-column:1/-1; }
-    }
-
-    /* ── BUTTONS ── */
-    .btn {
-        display:inline-flex; align-items:center; justify-content:center; gap:7px;
-        padding:9px 18px; border-radius:var(--r);
-        font-family:'Outfit',sans-serif; font-size:13px; font-weight:600;
-        cursor:pointer; border:none; transition:all .15s;
-        white-space:nowrap; line-height:1;
-    }
-
-    .btn-p { background:var(--accent); color:#fff; box-shadow:0 2px 8px rgba(79,70,229,0.3); }
-    .btn-p:hover { background:#4338ca; transform:translateY(-1px); }
-    .btn-p:active { transform:none; }
-
-    .btn-g { background:var(--green); color:#fff; box-shadow:0 2px 8px rgba(5,150,105,0.25); }
-    .btn-g:hover { background:#047857; transform:translateY(-1px); }
-
-    .btn-del {
-        background:none; color:var(--text3);
-        border:1px solid var(--border2); padding:6px 9px;
-        border-radius:var(--r); font-size:13px; cursor:pointer; transition:all .15s;
-    }
-    .btn-del:hover { background:var(--rsoft); border-color:rgba(220,38,38,0.25); color:var(--red); }
-
-    .btn-link-del {
-        background:none; border:none; color:var(--text3);
-        font-size:11px; font-weight:600; cursor:pointer;
-        font-family:'Outfit',sans-serif;
-        text-decoration:underline; text-underline-offset:2px; transition:color .15s;
-    }
-    .btn-link-del:hover { color:var(--red); }
-
-    /* ── TABLE ── */
-    .tbl-wrap { border-radius:var(--r2); border:1px solid var(--border); overflow:hidden; overflow-x:auto; }
-    table { width:100%; border-collapse:collapse; }
-    thead tr { border-bottom:1px solid var(--border); }
-    th { padding:10px 14px; font-size:10px; font-weight:700; color:var(--text3); text-transform:uppercase; letter-spacing:0.9px; text-align:left; white-space:nowrap; background:var(--surface2); }
-    td { padding:12px 14px; border-bottom:1px solid var(--border); font-size:13px; vertical-align:middle; }
-    tbody tr:last-child td { border-bottom:none; }
-    tbody tr { transition:background .1s; }
-    tbody tr:hover td { background:var(--surface2); }
-    tfoot td { border-top:1px solid var(--border); border-bottom:none; background:var(--surface2); font-weight:700; }
-
-    .td-name { font-weight:600; }
-    .td-m    { font-family:'JetBrains Mono',monospace; font-size:12px; }
-    .td-val  { font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:600; color:var(--accent); }
-    .td-muted { color:var(--text3); font-size:12px; }
-
-    /* ── RECIPE CARD ── */
-    .recipe-card {
-        background:var(--surface); border:1px solid var(--border);
-        border-radius:var(--r3); margin-bottom:14px; overflow:hidden;
-        box-shadow:var(--shadow); transition:border-color .2s;
-    }
-    .recipe-card:hover { border-color:var(--border2); }
-
-    .recipe-head {
-        display:flex; align-items:center; justify-content:space-between;
-        padding:14px 18px;
-        background:linear-gradient(90deg,var(--surface2),var(--surface));
-        border-bottom:1px solid var(--border);
-    }
-    .recipe-head-left { display:flex; align-items:center; gap:12px; }
-    .recipe-ico {
-        width:36px; height:36px; border-radius:9px;
-        background:var(--asoft); border:1px solid var(--aborder);
-        display:flex; align-items:center; justify-content:center;
-        font-size:17px; flex-shrink:0;
-    }
-    .recipe-name { font-size:15px; font-weight:700; color:var(--text); }
-    .recipe-meta { font-size:11px; color:var(--text3); margin-top:2px; }
-    .recipe-body { padding:16px 18px; }
-
-    .add-row {
-        display:flex; gap:10px; align-items:flex-end;
-        padding:12px; background:var(--surface2);
-        border:1px dashed var(--border2);
-        border-radius:var(--r2); margin-top:14px;
-    }
-    .add-row > div   { flex:1; }
-    .add-row > .fsm  { flex:0 0 85px; }
-    .add-row > .fbtn { flex:0 0 auto; }
-
-    /* ── BADGES ── */
-    .badge { display:inline-flex; align-items:center; gap:5px; padding:4px 10px; border-radius:99px; font-size:11px; font-weight:600; }
-    .badge.green  { background:var(--gsoft); color:var(--green); }
-    .badge.yellow { background:var(--ysoft); color:var(--yellow); }
-    .badge.red    { background:var(--rsoft); color:var(--red); }
-
-    /* ── DASHBOARD ── */
-    .price-wrap { display:flex; align-items:center; gap:5px; }
-    .price-wrap .sym { color:var(--text3); font-size:12px; font-weight:600; }
-    .price-wrap input { width:68px; text-align:right; font-family:'JetBrains Mono',monospace; font-weight:600; padding:7px 8px; }
-
-    .fc-ok   { color:var(--green);  font-family:'JetBrains Mono',monospace; font-weight:600; }
-    .fc-warn { color:var(--yellow); font-family:'JetBrains Mono',monospace; font-weight:600; }
-    .fc-bad  { color:var(--red);    font-family:'JetBrains Mono',monospace; font-weight:600; }
-
-    /* ── EMPTY ── */
-    .empty { text-align:center; padding:48px 20px; color:var(--text3); }
-    .empty-ico { font-size:36px; opacity:.35; margin-bottom:10px; }
-    .empty-txt { font-size:13px; }
-
-    /* ── MODAL ── */
-    .modal-overlay {
-        position:fixed; inset:0;
-        background:rgba(0,0,0,0.45);
-        z-index:3000;
-        display:flex; align-items:center; justify-content:center;
-        padding:20px;
-    }
-    .modal {
-        background:var(--surface);
-        border:1px solid var(--border);
-        border-radius:var(--r3);
-        padding:24px; width:100%; max-width:360px;
-        box-shadow:0 20px 60px rgba(0,0,0,0.15);
-        animation:fadeUp .2s ease;
-    }
-    .modal-title { font-size:16px; font-weight:700; margin-bottom:6px; }
-    .modal-sub   { font-size:12px; color:var(--text3); margin-bottom:18px; }
-    .modal-actions { display:flex; gap:8px; margin-top:16px; }
-    .modal-actions .btn { flex:1; }
-    .btn-cancel { background:var(--surface3); color:var(--text2); border:1px solid var(--border2); }
-    .btn-cancel:hover { background:var(--bg); }
-
-    /* ── SCREEN SELECTOR ── */
-    .screen-selector {
-        position:fixed; inset:0;
-        background:var(--bg);
-        z-index:2000;
-        display:flex; align-items:center; justify-content:center;
-        padding:20px;
-    }
-    .selector-inner { width:100%; max-width:420px; }
-    .selector-logo {
-        width:56px; height:56px;
-        background:linear-gradient(135deg,#4f46e5,#7c3aed);
-        border-radius:14px; display:flex; align-items:center; justify-content:center;
-        font-size:28px; margin:0 auto 16px;
-        box-shadow:0 8px 24px rgba(79,70,229,0.35);
-    }
-    .selector-title { font-size:24px; font-weight:700; text-align:center; letter-spacing:-0.5px; margin-bottom:4px; }
-    .selector-sub   { font-size:13px; color:var(--text3); text-align:center; margin-bottom:28px; }
-
-    .locale-list { display:flex; flex-direction:column; gap:8px; margin-bottom:16px; }
-
-    .locale-card {
-        display:flex; align-items:center; justify-content:space-between;
-        padding:14px 16px;
-        background:var(--surface); border:1px solid var(--border);
-        border-radius:var(--r2); cursor:pointer;
-        transition:all .15s; box-shadow:var(--shadow);
-    }
-    .locale-card:hover { border-color:var(--aborder); background:var(--asoft); }
-    .locale-card-name { font-size:14px; font-weight:600; color:var(--text); }
-    .locale-card-meta { font-size:11px; color:var(--text3); margin-top:2px; }
-    .locale-card-arrow { color:var(--text3); font-size:16px; }
-
-    .btn-new-locale {
-        display:flex; align-items:center; justify-content:center; gap:8px;
-        width:100%; padding:12px;
-        background:none; border:2px dashed var(--border2);
-        border-radius:var(--r2); cursor:pointer;
-        color:var(--accent); font-size:13px; font-weight:600;
-        font-family:'Outfit',sans-serif; transition:all .15s;
-    }
-    .btn-new-locale:hover { background:var(--asoft); border-color:var(--aborder); }
-
-    /* ── MOBILE BOTTOM NAV ── */
-    .bottom-nav { display:none; }
-
-    @media(max-width:640px) {
-        .sidebar { display:none; }
-        .topbar  { padding:0 16px; }
-        .content { padding:16px 14px 90px; }
-        .bottom-nav {
-            display:flex; position:fixed; bottom:0; left:0; right:0;
-            background:var(--surface); border-top:1px solid var(--border);
-            z-index:100; padding-bottom:env(safe-area-inset-bottom);
-            box-shadow:0 -2px 10px rgba(0,0,0,0.06);
+        html, body {
+            height:100%; height:100dvh;
+            font-family:'Outfit',sans-serif;
+            background:var(--bg);
+            color:var(--text);
+            font-size:14px;
+            line-height:1.55;
+            -webkit-font-smoothing:antialiased;
         }
-        .bnav-btn {
-            flex:1; display:flex; flex-direction:column;
-            align-items:center; justify-content:center; gap:4px;
-            padding:10px 4px; background:none; border:none;
-            color:var(--text3); font-size:10px;
-            font-family:'Outfit',sans-serif; font-weight:600; cursor:pointer; transition:color .15s;
+
+        /* ── LAYOUT ── */
+        .app { display:flex; height:100vh; height:100dvh; overflow:hidden; }
+
+        /* ── SIDEBAR ── */
+        .sidebar {
+            width:var(--sidebar);
+            background:var(--surface);
+            border-right:1px solid var(--border);
+            display:flex; flex-direction:column;
+            flex-shrink:0;
         }
-        .bnav-btn.active { color:var(--accent); }
-        .bnav-ico { font-size:20px; }
-    }
 
-    /* ── ANIMATIONS ── */
-    @keyframes fadeUp {
-        from { opacity:0; transform:translateY(10px); }
-        to   { opacity:1; transform:translateY(0); }
-    }
-    .card,.recipe-card,.stats-row { animation:fadeUp .25s ease both; }
+        .sb-brand {
+            padding:18px 16px 16px;
+            border-bottom:1px solid var(--border);
+        }
 
-    /* ── UTILS ── */
-    .hidden { display:none !important; }
-    ::-webkit-scrollbar { width:4px; height:4px; }
-    ::-webkit-scrollbar-track { background:transparent; }
-    ::-webkit-scrollbar-thumb { background:var(--border2); border-radius:99px; }
-</style>
-```
+        .sb-logo {
+            width:38px; height:38px;
+            background:linear-gradient(135deg,#4f46e5,#7c3aed);
+            border-radius:10px;
+            display:flex; align-items:center; justify-content:center;
+            font-size:20px; margin-bottom:10px;
+            box-shadow:0 4px 12px rgba(79,70,229,0.3);
+        }
 
+        .sb-name { font-size:14px; font-weight:700; color:var(--text); letter-spacing:-0.3px; }
+        .sb-tag  { font-size:11px; color:var(--text3); margin-top:1px; }
+
+        /* LOCALE SWITCHER */
+        .sb-locale {
+            padding:10px;
+            border-bottom:1px solid var(--border);
+        }
+
+        .locale-label {
+            font-size:9px; font-weight:700; text-transform:uppercase;
+            letter-spacing:1.5px; color:var(--text3);
+            padding:0 8px 5px;
+        }
+
+        .locale-current {
+            display:flex; align-items:center; justify-content:space-between;
+            padding:8px 10px;
+            background:var(--asoft);
+            border:1px solid var(--aborder);
+            border-radius:var(--r);
+            cursor:pointer;
+            transition:all .15s;
+        }
+        .locale-current:hover { background:rgba(79,70,229,0.12); }
+
+        .locale-name {
+            font-size:13px; font-weight:600; color:var(--accent);
+            white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+            max-width:140px;
+        }
+
+        .locale-chevron { color:var(--accent); font-size:10px; flex-shrink:0; }
+
+        .locale-dropdown {
+            background:var(--surface);
+            border:1px solid var(--border);
+            border-radius:var(--r);
+            margin-top:6px;
+            overflow:hidden;
+            box-shadow:var(--shadow2);
+        }
+
+        .locale-item {
+            display:flex; align-items:center; justify-content:space-between;
+            padding:10px 12px;
+            cursor:pointer;
+            font-size:13px; font-weight:500; color:var(--text2);
+            border-bottom:1px solid var(--border);
+            transition:background .1s;
+        }
+        .locale-item:last-child { border-bottom:none; }
+        .locale-item:hover { background:var(--surface3); }
+        .locale-item.active { color:var(--accent); font-weight:600; }
+        .locale-item-check { color:var(--accent); font-size:13px; }
+
+        .btn-add-locale {
+            display:flex; align-items:center; gap:6px;
+            width:100%; padding:9px 12px;
+            background:none; border:none;
+            color:var(--accent); font-size:12px; font-weight:600;
+            cursor:pointer; font-family:'Outfit',sans-serif;
+            border-top:1px solid var(--border);
+            transition:background .15s;
+        }
+        .btn-add-locale:hover { background:var(--asoft); }
+
+        /* NAV */
+        .sb-nav { padding:10px; flex:1; }
+
+        .nav-section-label {
+            font-size:9px; font-weight:700; text-transform:uppercase;
+            letter-spacing:1.5px; color:var(--text3);
+            padding:8px 8px 4px;
+        }
+
+        .nav-btn {
+            display:flex; align-items:center; gap:10px;
+            width:100%; padding:9px 10px;
+            border-radius:var(--r);
+            background:none; border:none;
+            color:var(--text2); font-size:13px; font-weight:500;
+            cursor:pointer; font-family:'Outfit',sans-serif;
+            transition:all .15s; text-align:left;
+            margin-bottom:1px;
+        }
+        .nav-btn:hover { background:var(--surface3); color:var(--text); }
+        .nav-btn.active { background:var(--asoft); color:var(--accent); border:1px solid var(--aborder); }
+
+        .nav-ico {
+            width:30px; height:30px; border-radius:7px;
+            display:flex; align-items:center; justify-content:center;
+            font-size:15px; background:var(--surface3); flex-shrink:0;
+        }
+        .nav-btn.active .nav-ico { background:var(--asoft); }
+
+        .nav-count {
+            margin-left:auto;
+            font-family:'JetBrains Mono',monospace;
+            font-size:10px; font-weight:600; color:var(--text3);
+            background:var(--surface3); padding:1px 6px; border-radius:99px;
+        }
+        .nav-btn.active .nav-count { color:var(--accent); background:var(--asoft); }
+
+        .sb-footer {
+            padding:10px; border-top:1px solid var(--border);
+        }
+
+        .btn-reset-sb {
+            display:flex; align-items:center; gap:8px;
+            width:100%; padding:8px 10px;
+            border-radius:var(--r); background:none; border:none;
+            color:var(--text3); font-size:12px; font-weight:500;
+            cursor:pointer; font-family:'Outfit',sans-serif; transition:all .15s;
+        }
+        .btn-reset-sb:hover { background:var(--rsoft); color:var(--red); }
+
+        /* ── MAIN ── */
+        .main { flex:1; display:flex; flex-direction:column; overflow:hidden; min-width:0; }
+
+        .topbar {
+            height:58px; background:var(--surface);
+            border-bottom:1px solid var(--border);
+            padding:0 24px;
+            display:flex; align-items:center; justify-content:space-between;
+            flex-shrink:0; box-shadow:var(--shadow);
+        }
+
+        .page-title { font-size:15px; font-weight:700; letter-spacing:-0.3px; }
+        .page-desc  { font-size:11px; color:var(--text3); margin-top:1px; }
+
+        .topbar-locale {
+            display:flex; align-items:center; gap:6px;
+            padding:6px 12px;
+            background:var(--asoft); border:1px solid var(--aborder);
+            border-radius:99px; font-size:12px; font-weight:600; color:var(--accent);
+        }
+
+        .content { flex:1; overflow-y:auto; padding:22px 24px 60px; }
+
+        /* ── STAT PILLS ── */
+        .stats-row {
+            display:grid;
+            grid-template-columns:repeat(auto-fit, minmax(130px,1fr));
+            gap:10px; margin-bottom:18px;
+        }
+
+        .stat-pill {
+            background:var(--surface); border:1px solid var(--border);
+            border-radius:var(--r2); padding:14px 16px;
+            box-shadow:var(--shadow);
+        }
+        .stat-pill-label { font-size:10px; color:var(--text3); font-weight:600; text-transform:uppercase; letter-spacing:0.8px; margin-bottom:5px; }
+        .stat-pill-val   { font-size:24px; font-weight:700; font-family:'JetBrains Mono',monospace; letter-spacing:-1.5px; }
+        .stat-pill-val.accent { color:var(--accent2); }
+        .stat-pill-val.green  { color:var(--green); }
+        .stat-pill-val.orange { color:var(--orange); }
+        .stat-pill-val.red    { color:var(--red); }
+        .stat-pill-sub { font-size:11px; color:var(--text3); margin-top:2px; }
+
+        /* ── CARD ── */
+        .card {
+            background:var(--surface); border:1px solid var(--border);
+            border-radius:var(--r3); padding:20px; margin-bottom:14px;
+            box-shadow:var(--shadow);
+        }
+        .card.ta { background:var(--surface); border-color:var(--aborder); border-left:3px solid var(--accent); }
+        .card.tg { background:var(--surface); border-color:rgba(5,150,105,0.25); border-left:3px solid var(--green); }
+        .card.to { background:var(--surface); border-color:rgba(234,88,12,0.25); border-left:3px solid var(--orange); }
+
+        .card-title { font-size:13px; font-weight:700; color:var(--text); display:flex; align-items:center; gap:8px; margin-bottom:14px; }
+        .ctag { font-size:10px; font-weight:600; padding:2px 8px; border-radius:99px; background:var(--asoft); color:var(--accent); }
+        .card-sub { font-size:11px; color:var(--text3); margin-top:-8px; margin-bottom:16px; }
+
+        /* ── FORM ── */
+        .field { display:flex; flex-direction:column; gap:5px; }
+        .field label { font-size:10px; font-weight:700; color:var(--text3); text-transform:uppercase; letter-spacing:0.8px; }
+
+        input[type="text"],
+        input[type="number"],
+        select {
+            width:100%;
+            padding:9px 12px;
+            background:var(--surface2);
+            border:1px solid var(--border2);
+            border-radius:var(--r);
+            color:var(--text);
+            font-family:'Outfit',sans-serif;
+            font-size:13px; font-weight:400;
+            transition:border-color .15s, box-shadow .15s;
+            -webkit-appearance:none; appearance:none;
+        }
+        input::placeholder { color:var(--text3); }
+        input:focus, select:focus {
+            outline:none; border-color:var(--accent);
+            box-shadow:0 0 0 3px var(--asoft);
+            background:var(--surface);
+        }
+        select {
+            background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%239ca3af'/%3E%3C/svg%3E");
+            background-repeat:no-repeat; background-position:right 12px center;
+            padding-right:32px; cursor:pointer;
+        }
+
+        .form-grid { display:grid; gap:12px; align-items:end; }
+        .fg5 { grid-template-columns:2fr 1.2fr 1fr 1fr auto; }
+        .fg2 { grid-template-columns:1fr auto; }
+
+        @media(max-width:860px) {
+            .fg5 { grid-template-columns:1fr 1fr; }
+            .fg5 .btn-col { grid-column:1/-1; }
+        }
+
+        /* ── BUTTONS ── */
+        .btn {
+            display:inline-flex; align-items:center; justify-content:center; gap:7px;
+            padding:9px 18px; border-radius:var(--r);
+            font-family:'Outfit',sans-serif; font-size:13px; font-weight:600;
+            cursor:pointer; border:none; transition:all .15s;
+            white-space:nowrap; line-height:1;
+        }
+
+        .btn-p { background:var(--accent); color:#fff; box-shadow:0 2px 8px rgba(79,70,229,0.3); }
+        .btn-p:hover { background:#4338ca; transform:translateY(-1px); }
+        .btn-p:active { transform:none; }
+
+        .btn-g { background:var(--green); color:#fff; box-shadow:0 2px 8px rgba(5,150,105,0.25); }
+        .btn-g:hover { background:#047857; transform:translateY(-1px); }
+
+        .btn-del {
+            background:none; color:var(--text3);
+            border:1px solid var(--border2); padding:6px 9px;
+            border-radius:var(--r); font-size:13px; cursor:pointer; transition:all .15s;
+        }
+        .btn-del:hover { background:var(--rsoft); border-color:rgba(220,38,38,0.25); color:var(--red); }
+
+        .btn-link-del {
+            background:none; border:none; color:var(--text3);
+            font-size:11px; font-weight:600; cursor:pointer;
+            font-family:'Outfit',sans-serif;
+            text-decoration:underline; text-underline-offset:2px; transition:color .15s;
+        }
+        .btn-link-del:hover { color:var(--red); }
+
+        /* ── TABLE ── */
+        .tbl-wrap { border-radius:var(--r2); border:1px solid var(--border); overflow:hidden; overflow-x:auto; }
+        table { width:100%; border-collapse:collapse; }
+        thead tr { border-bottom:1px solid var(--border); }
+        th { padding:10px 14px; font-size:10px; font-weight:700; color:var(--text3); text-transform:uppercase; letter-spacing:0.9px; text-align:left; white-space:nowrap; background:var(--surface2); }
+        td { padding:12px 14px; border-bottom:1px solid var(--border); font-size:13px; vertical-align:middle; }
+        tbody tr:last-child td { border-bottom:none; }
+        tbody tr { transition:background .1s; }
+        tbody tr:hover td { background:var(--surface2); }
+        tfoot td { border-top:1px solid var(--border); border-bottom:none; background:var(--surface2); font-weight:700; }
+
+        .td-name { font-weight:600; }
+        .td-m    { font-family:'JetBrains Mono',monospace; font-size:12px; }
+        .td-val  { font-family:'JetBrains Mono',monospace; font-size:13px; font-weight:600; color:var(--accent); }
+        .td-muted { color:var(--text3); font-size:12px; }
+
+        /* ── RECIPE CARD ── */
+        .recipe-card {
+            background:var(--surface); border:1px solid var(--border);
+            border-radius:var(--r3); margin-bottom:14px; overflow:hidden;
+            box-shadow:var(--shadow); transition:border-color .2s;
+        }
+        .recipe-card:hover { border-color:var(--border2); }
+
+        .recipe-head {
+            display:flex; align-items:center; justify-content:space-between;
+            padding:14px 18px;
+            background:linear-gradient(90deg,var(--surface2),var(--surface));
+            border-bottom:1px solid var(--border);
+        }
+        .recipe-head-left { display:flex; align-items:center; gap:12px; }
+        .recipe-ico {
+            width:36px; height:36px; border-radius:9px;
+            background:var(--asoft); border:1px solid var(--aborder);
+            display:flex; align-items:center; justify-content:center;
+            font-size:17px; flex-shrink:0;
+        }
+        .recipe-name { font-size:15px; font-weight:700; color:var(--text); }
+        .recipe-meta { font-size:11px; color:var(--text3); margin-top:2px; }
+        .recipe-body { padding:16px 18px; }
+
+        .add-row {
+            display:flex; gap:10px; align-items:flex-end;
+            padding:12px; background:var(--surface2);
+            border:1px dashed var(--border2);
+            border-radius:var(--r2); margin-top:14px;
+        }
+        .add-row > div   { flex:1; }
+        .add-row > .fsm  { flex:0 0 85px; }
+        .add-row > .fbtn { flex:0 0 auto; }
+
+        /* ── BADGES ── */
+        .badge { display:inline-flex; align-items:center; gap:5px; padding:4px 10px; border-radius:99px; font-size:11px; font-weight:600; }
+        .badge.green  { background:var(--gsoft); color:var(--green); }
+        .badge.yellow { background:var(--ysoft); color:var(--yellow); }
+        .badge.red    { background:var(--rsoft); color:var(--red); }
+
+        /* ── DASHBOARD ── */
+        .price-wrap { display:flex; align-items:center; gap:5px; }
+        .price-wrap .sym { color:var(--text3); font-size:12px; font-weight:600; }
+        .price-wrap input { width:68px; text-align:right; font-family:'JetBrains Mono',monospace; font-weight:600; padding:7px 8px; }
+
+        .fc-ok   { color:var(--green);  font-family:'JetBrains Mono',monospace; font-weight:600; }
+        .fc-warn { color:var(--yellow); font-family:'JetBrains Mono',monospace; font-weight:600; }
+        .fc-bad  { color:var(--red);    font-family:'JetBrains Mono',monospace; font-weight:600; }
+
+        /* ── EMPTY ── */
+        .empty { text-align:center; padding:48px 20px; color:var(--text3); }
+        .empty-ico { font-size:36px; opacity:.35; margin-bottom:10px; }
+        .empty-txt { font-size:13px; }
+
+        /* ── MODAL ── */
+        .modal-overlay {
+            position:fixed; inset:0;
+            background:rgba(0,0,0,0.45);
+            z-index:3000;
+            display:flex; align-items:center; justify-content:center;
+            padding:20px;
+        }
+        .modal {
+            background:var(--surface);
+            border:1px solid var(--border);
+            border-radius:var(--r3);
+            padding:24px; width:100%; max-width:360px;
+            box-shadow:0 20px 60px rgba(0,0,0,0.15);
+            animation:fadeUp .2s ease;
+        }
+        .modal-title { font-size:16px; font-weight:700; margin-bottom:6px; }
+        .modal-sub   { font-size:12px; color:var(--text3); margin-bottom:18px; }
+        .modal-actions { display:flex; gap:8px; margin-top:16px; }
+        .modal-actions .btn { flex:1; }
+        .btn-cancel { background:var(--surface3); color:var(--text2); border:1px solid var(--border2); }
+        .btn-cancel:hover { background:var(--bg); }
+
+        /* ── SCREEN SELECTOR ── */
+        .screen-selector {
+            position:fixed; inset:0;
+            background:var(--bg);
+            z-index:2000;
+            display:flex; align-items:center; justify-content:center;
+            padding:20px;
+        }
+        .selector-inner { width:100%; max-width:420px; }
+        .selector-logo {
+            width:56px; height:56px;
+            background:linear-gradient(135deg,#4f46e5,#7c3aed);
+            border-radius:14px; display:flex; align-items:center; justify-content:center;
+            font-size:28px; margin:0 auto 16px;
+            box-shadow:0 8px 24px rgba(79,70,229,0.35);
+        }
+        .selector-title { font-size:24px; font-weight:700; text-align:center; letter-spacing:-0.5px; margin-bottom:4px; }
+        .selector-sub   { font-size:13px; color:var(--text3); text-align:center; margin-bottom:28px; }
+
+        .locale-list { display:flex; flex-direction:column; gap:8px; margin-bottom:16px; }
+
+        .locale-card {
+            display:flex; align-items:center; justify-content:space-between;
+            padding:14px 16px;
+            background:var(--surface); border:1px solid var(--border);
+            border-radius:var(--r2); cursor:pointer;
+            transition:all .15s; box-shadow:var(--shadow);
+        }
+        .locale-card:hover { border-color:var(--aborder); background:var(--asoft); }
+        .locale-card-name { font-size:14px; font-weight:600; color:var(--text); }
+        .locale-card-meta { font-size:11px; color:var(--text3); margin-top:2px; }
+        .locale-card-arrow { color:var(--text3); font-size:16px; }
+
+        .btn-new-locale {
+            display:flex; align-items:center; justify-content:center; gap:8px;
+            width:100%; padding:12px;
+            background:none; border:2px dashed var(--border2);
+            border-radius:var(--r2); cursor:pointer;
+            color:var(--accent); font-size:13px; font-weight:600;
+            font-family:'Outfit',sans-serif; transition:all .15s;
+        }
+        .btn-new-locale:hover { background:var(--asoft); border-color:var(--aborder); }
+
+        /* ── MOBILE BOTTOM NAV ── */
+        .bottom-nav { display:none; }
+
+        @media(max-width:640px) {
+            .sidebar { display:none; }
+            .topbar  { padding:0 16px; }
+            .content { padding:16px 14px 90px; }
+            .bottom-nav {
+                display:flex; position:fixed; bottom:0; left:0; right:0;
+                background:var(--surface); border-top:1px solid var(--border);
+                z-index:100; padding-bottom:env(safe-area-inset-bottom);
+                box-shadow:0 -2px 10px rgba(0,0,0,0.06);
+            }
+            .bnav-btn {
+                flex:1; display:flex; flex-direction:column;
+                align-items:center; justify-content:center; gap:4px;
+                padding:10px 4px; background:none; border:none;
+                color:var(--text3); font-size:10px;
+                font-family:'Outfit',sans-serif; font-weight:600; cursor:pointer; transition:color .15s;
+            }
+            .bnav-btn.active { color:var(--accent); }
+            .bnav-ico { font-size:20px; }
+        }
+
+        /* ── ANIMATIONS ── */
+        @keyframes fadeUp {
+            from { opacity:0; transform:translateY(10px); }
+            to   { opacity:1; transform:translateY(0); }
+        }
+        .card,.recipe-card,.stats-row { animation:fadeUp .25s ease both; }
+
+        /* ── UTILS ── */
+        .hidden { display:none !important; }
+        ::-webkit-scrollbar { width:4px; height:4px; }
+        ::-webkit-scrollbar-track { background:transparent; }
+        ::-webkit-scrollbar-thumb { background:var(--border2); border-radius:99px; }
+    </style>
 </head>
 <body>
 
 <!-- ══════════════════════════════════════ -->
-
 <!-- SCHERMATA SELEZIONE LOCALE            -->
-
 <!-- ══════════════════════════════════════ -->
-
 <div class="screen-selector" id="screen-selector">
     <div class="selector-inner">
         <div id="selector-back-wrap" style="margin-bottom:12px;display:none">
@@ -530,223 +523,216 @@
         <div class="selector-title">Food Cost Manager</div>
         <div class="selector-sub">Seleziona o crea un locale per iniziare</div>
 
-```
-    <div class="locale-list" id="locale-list"></div>
+        <div class="locale-list" id="locale-list"></div>
 
-    <button class="btn-new-locale" onclick="mostraModalNuovoLocale()">
-        + Aggiungi nuovo locale
-    </button>
-</div>
-```
-
+        <button class="btn-new-locale" onclick="mostraModalNuovoLocale()">
+            + Aggiungi nuovo locale
+        </button>
+    </div>
 </div>
 
 <!-- ══════════════════════════════════════ -->
-
 <!-- APP PRINCIPALE                        -->
-
 <!-- ══════════════════════════════════════ -->
-
 <div class="app hidden" id="app-main">
 
-```
-<!-- SIDEBAR -->
-<aside class="sidebar">
-    <div class="sb-brand">
-        <div class="sb-logo">🍷</div>
-        <div class="sb-name">Food Cost</div>
-        <div class="sb-tag">Gestione Enoteca</div>
-    </div>
-
-    <!-- LOCALE SWITCHER -->
-    <div class="sb-locale">
-        <div class="locale-label">Locale attivo</div>
-        <div class="locale-current" onclick="toggleLocaleDropdown()">
-            <span class="locale-name" id="sb-locale-name">—</span>
-            <span class="locale-chevron" id="locale-chevron">▼</span>
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <div class="sb-brand">
+            <div class="sb-logo">🍷</div>
+            <div class="sb-name">Food Cost</div>
+            <div class="sb-tag">Gestione Enoteca</div>
         </div>
-        <div class="locale-dropdown hidden" id="locale-dropdown">
-            <div id="locale-dropdown-list"></div>
-            <button class="btn-add-locale" onclick="mostraModalNuovoLocale()">+ Nuovo locale</button>
+
+        <!-- LOCALE SWITCHER -->
+        <div class="sb-locale">
+            <div class="locale-label">Locale attivo</div>
+            <div class="locale-current" onclick="toggleLocaleDropdown()">
+                <span class="locale-name" id="sb-locale-name">—</span>
+                <span class="locale-chevron" id="locale-chevron">▼</span>
+            </div>
+            <div class="locale-dropdown hidden" id="locale-dropdown">
+                <div id="locale-dropdown-list"></div>
+                <button class="btn-add-locale" onclick="mostraModalNuovoLocale()">+ Nuovo locale</button>
+            </div>
         </div>
-    </div>
 
-    <nav class="sb-nav">
-        <div class="nav-section-label">Moduli</div>
-        <button class="nav-btn active" onclick="switchTab('magazzino')" id="tab-magazzino">
-            <div class="nav-ico">🧂</div>
-            <span>Magazzino</span>
-            <span class="nav-count" id="cnt-mag">0</span>
-        </button>
-        <button class="nav-btn" onclick="switchTab('ricettario')" id="tab-ricettario">
-            <div class="nav-ico">📋</div>
-            <span>Distinta Base</span>
-            <span class="nav-count" id="cnt-ric">0</span>
-        </button>
-        <button class="nav-btn" onclick="switchTab('dashboard')" id="tab-dashboard">
-            <div class="nav-ico">📊</div>
-            <span>Dashboard</span>
-        </button>
-    </nav>
+        <nav class="sb-nav">
+            <div class="nav-section-label">Moduli</div>
+            <button class="nav-btn active" onclick="switchTab('magazzino')" id="tab-magazzino">
+                <div class="nav-ico">🧂</div>
+                <span>Magazzino</span>
+                <span class="nav-count" id="cnt-mag">0</span>
+            </button>
+            <button class="nav-btn" onclick="switchTab('ricettario')" id="tab-ricettario">
+                <div class="nav-ico">📋</div>
+                <span>Distinta Base</span>
+                <span class="nav-count" id="cnt-ric">0</span>
+            </button>
+            <button class="nav-btn" onclick="switchTab('dashboard')" id="tab-dashboard">
+                <div class="nav-ico">📊</div>
+                <span>Dashboard</span>
+            </button>
+        </nav>
 
-    <div class="sb-footer">
-        <button class="btn-reset-sb" onclick="eliminaLocale()">🗑 Elimina locale attivo</button>
-    </div>
-</aside>
-
-<!-- MAIN -->
-<div class="main">
-    <div class="topbar">
-        <div>
-            <div class="page-title" id="page-title">Magazzino Ingredienti</div>
-            <div class="page-desc"  id="page-desc">Prezzi e rese degli ingredienti</div>
+        <div class="sb-footer">
+            <button class="btn-reset-sb" onclick="eliminaLocale()">🗑 Elimina locale attivo</button>
         </div>
-        <div class="topbar-locale" id="topbar-locale-name" onclick="mostraSelector()" style="cursor:pointer" title="Cambia locale">🍴 —</div>
-    </div>
+    </aside>
 
-    <div class="content" id="content-area">
+    <!-- MAIN -->
+    <div class="main">
+        <div class="topbar">
+            <div>
+                <div class="page-title" id="page-title">Magazzino Ingredienti</div>
+                <div class="page-desc"  id="page-desc">Prezzi e rese degli ingredienti</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px">
+                <button onclick="apriSettings()" style="background:none;border:1px solid var(--border);border-radius:50%;width:34px;height:34px;font-size:16px;cursor:pointer;color:var(--text2);display:flex;align-items:center;justify-content:center" title="Impostazioni">⚙️</button>
+                <div class="topbar-locale" id="topbar-locale-name" onclick="mostraSelector()" style="cursor:pointer" title="Cambia locale">🍴 —</div>
+            </div>
+        </div>
 
-        <!-- MAGAZZINO -->
-        <div id="sec-magazzino">
-            <div class="stats-row" id="stats-mag"></div>
+        <div class="content" id="content-area">
 
-            <!-- SCANSIONE FATTURA AI -->
-            <div class="card" style="border-color:rgba(139,92,246,0.3);background:linear-gradient(135deg,rgba(139,92,246,0.05),var(--surface))">
-                <div class="card-title" style="color:#7c3aed">📷 Scansione Fattura AI <span class="ctag" style="background:rgba(139,92,246,0.1);color:#7c3aed">beta</span></div>
-                <div class="card-sub">Scatta una foto alla fattura del fornitore — l'AI rileva automaticamente ingredienti e prezzi</div>
-                <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
-                    <label for="input-fattura" class="btn" style="background:#7c3aed;color:#fff;box-shadow:0 2px 10px rgba(124,58,237,0.3);cursor:pointer">
-                        📷 Scatta / Carica Fattura
-                    </label>
-                    <input type="file" id="input-fattura" accept="image/*" capture="environment" style="display:none" onchange="analizzaFattura(this)">
-                    <span id="fattura-status" style="font-size:12px;color:var(--text3)"></span>
+            <!-- MAGAZZINO -->
+            <div id="sec-magazzino">
+                <div class="stats-row" id="stats-mag"></div>
+
+                <!-- SCANSIONE FATTURA AI -->
+                <div class="card" style="border-color:rgba(139,92,246,0.3);background:linear-gradient(135deg,rgba(139,92,246,0.05),var(--surface))">
+                    <div class="card-title" style="color:#7c3aed">📷 Scansione Fattura AI <span class="ctag" style="background:rgba(139,92,246,0.1);color:#7c3aed">beta</span></div>
+                    <div class="card-sub">Scatta una foto alla fattura del fornitore — l'AI rileva automaticamente ingredienti e prezzi</div>
+                    <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+                        <label for="input-fattura" class="btn" style="background:#7c3aed;color:#fff;box-shadow:0 2px 10px rgba(124,58,237,0.3);cursor:pointer">
+                            📷 Scatta / Carica Fattura
+                        </label>
+                        <input type="file" id="input-fattura" accept="image/*" capture="environment" style="display:none" onchange="analizzaFattura(this)">
+                        <span id="fattura-status" style="font-size:12px;color:var(--text3)"></span>
+                    </div>
+                    <!-- Preview e risultati AI -->
+                    <div id="fattura-preview-wrap" style="display:none;margin-top:14px">
+                        <img id="fattura-preview" style="max-width:100%;max-height:200px;border-radius:8px;border:1px solid var(--border);object-fit:contain;display:block;margin-bottom:12px">
+                        <div id="fattura-risultati"></div>
+                    </div>
                 </div>
-                <!-- Preview e risultati AI -->
-                <div id="fattura-preview-wrap" style="display:none;margin-top:14px">
-                    <img id="fattura-preview" style="max-width:100%;max-height:200px;border-radius:8px;border:1px solid var(--border);object-fit:contain;display:block;margin-bottom:12px">
-                    <div id="fattura-risultati"></div>
+
+                <div class="card ta">
+                    <div class="card-title">Aggiungi Ingrediente <span class="ctag">nuovo</span></div>
+                    <div class="card-sub">Inserisci prezzi IVA esclusa dalla fattura del fornitore</div>
+                    <form id="form-ingrediente">
+                        <div class="form-grid fg5">
+                            <div class="field">
+                                <label>Nome Ingrediente</label>
+                                <input type="text" id="ing-nome" required placeholder="es. Prosciutto di Parma DOP">
+                            </div>
+                            <div class="field">
+                                <label>Prezzo Lordo €/Kg</label>
+                                <input type="number" id="ing-prezzo" step="0.01" min="0" required placeholder="24.00">
+                            </div>
+                            <div class="field">
+                                <label>Resa Netta %</label>
+                                <input type="number" id="ing-resa" step="1" min="1" max="100" value="100" required>
+                            </div>
+                            <div class="field">
+                                <label>Fornitore</label>
+                                <input type="text" id="ing-fornitore" placeholder="opzionale">
+                            </div>
+                            <div class="field btn-col">
+                                <label>&nbsp;</label>
+                                <button type="submit" class="btn btn-p" style="width:100%">+ Aggiungi</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="card">
+                    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;gap:12px;flex-wrap:wrap">
+                        <div class="card-title" style="margin-bottom:0">Lista Ingredienti</div>
+                        <div style="position:relative;flex:1;max-width:260px;min-width:160px">
+                            <span style="position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--text3);font-size:14px;pointer-events:none">🔍</span>
+                            <input type="text" id="search-ingredienti" placeholder="Cerca ingrediente..." oninput="renderMagazzino()" style="padding-left:32px;margin:0">
+                        </div>
+                    </div>
+                    <div class="tbl-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Ingrediente</th>
+                                    <th>Fornitore</th>
+                                    <th>Prezzo Lordo</th>
+                                    <th>Resa</th>
+                                    <th>Costo Netto /Kg</th>
+                                    <th>Costo /g</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody id="lista-ingredienti"></tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
 
-            <div class="card ta">
-                <div class="card-title">Aggiungi Ingrediente <span class="ctag">nuovo</span></div>
-                <div class="card-sub">Inserisci prezzi IVA esclusa dalla fattura del fornitore</div>
-                <form id="form-ingrediente">
-                    <div class="form-grid fg5">
+            <!-- RICETTARIO -->
+            <div id="sec-ricettario" class="hidden">
+                <div class="card tg">
+                    <div class="card-title">Nuovo Piatto / Tagliere</div>
+                    <div class="form-grid fg2" style="margin-top:4px">
                         <div class="field">
-                            <label>Nome Ingrediente</label>
-                            <input type="text" id="ing-nome" required placeholder="es. Prosciutto di Parma DOP">
+                            <label>Nome del Piatto</label>
+                            <input type="text" id="nuovo-piatto-nome" placeholder="es. Tagliere della Casa Medio">
                         </div>
                         <div class="field">
-                            <label>Prezzo Lordo €/Kg</label>
-                            <input type="number" id="ing-prezzo" step="0.01" min="0" required placeholder="24.00">
-                        </div>
-                        <div class="field">
-                            <label>Resa Netta %</label>
-                            <input type="number" id="ing-resa" step="1" min="1" max="100" value="100" required>
-                        </div>
-                        <div class="field">
-                            <label>Fornitore</label>
-                            <input type="text" id="ing-fornitore" placeholder="opzionale">
-                        </div>
-                        <div class="field btn-col">
                             <label>&nbsp;</label>
-                            <button type="submit" class="btn btn-p" style="width:100%">+ Aggiungi</button>
+                            <button onclick="creaNuovoPiatto()" class="btn btn-g">+ Crea Scheda</button>
                         </div>
                     </div>
-                </form>
-            </div>
-            <div class="card">
-                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;gap:12px;flex-wrap:wrap">
-                    <div class="card-title" style="margin-bottom:0">Lista Ingredienti</div>
-                    <div style="position:relative;flex:1;max-width:260px;min-width:160px">
-                        <span style="position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--text3);font-size:14px;pointer-events:none">🔍</span>
-                        <input type="text" id="search-ingredienti" placeholder="Cerca ingrediente..." oninput="renderMagazzino()" style="padding-left:32px;margin:0">
-                    </div>
                 </div>
-                <div class="tbl-wrap">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Ingrediente</th>
-                                <th>Fornitore</th>
-                                <th>Prezzo Lordo</th>
-                                <th>Resa</th>
-                                <th>Costo Netto /Kg</th>
-                                <th>Costo /g</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody id="lista-ingredienti"></tbody>
-                    </table>
-                </div>
+                <div id="contenitore-piatti"></div>
             </div>
-        </div>
 
-        <!-- RICETTARIO -->
-        <div id="sec-ricettario" class="hidden">
-            <div class="card tg">
-                <div class="card-title">Nuovo Piatto / Tagliere</div>
-                <div class="form-grid fg2" style="margin-top:4px">
-                    <div class="field">
-                        <label>Nome del Piatto</label>
-                        <input type="text" id="nuovo-piatto-nome" placeholder="es. Tagliere della Casa Medio">
+            <!-- DASHBOARD -->
+            <div id="sec-dashboard" class="hidden">
+                <div class="stats-row" id="stats-dash"></div>
+                <div class="card to">
+                    <div class="card-title">Impostazioni Globali</div>
+                    <div style="display:flex;gap:20px;flex-wrap:wrap;align-items:flex-end;margin-top:4px">
+                        <div class="field">
+                            <label>Food Cost Obiettivo (%)</label>
+                            <input type="number" id="global-fc-target" value="30" step="1" min="5" max="80" style="width:80px" onchange="aggiornaDashboard()">
+                        </div>
+                        <div class="field">
+                            <label>IVA Applicata (%)</label>
+                            <input type="number" id="global-iva" value="10" step="1" min="0" max="22" style="width:80px" onchange="aggiornaDashboard()">
+                        </div>
+                        <div style="font-size:11px;color:var(--text3);padding-bottom:10px">Modifica per ricalcolare tutti i prezzi.</div>
                     </div>
-                    <div class="field">
-                        <label>&nbsp;</label>
-                        <button onclick="creaNuovoPiatto()" class="btn btn-g">+ Crea Scheda</button>
+                </div>
+                <div class="card">
+                    <div class="card-title">Analisi Prezzi &amp; Margini</div>
+                    <div class="tbl-wrap">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Piatto</th>
+                                    <th>Costo MP</th>
+                                    <th>Prezzo Cons. (netto)</th>
+                                    <th>Prezzo da Menù (IVA inc.)</th>
+                                    <th>Tuo Prezzo Finale</th>
+                                    <th>Food Cost Reale</th>
+                                    <th>Stato</th>
+                                </tr>
+                            </thead>
+                            <tbody id="lista-dashboard"></tbody>
+                        </table>
                     </div>
                 </div>
             </div>
-            <div id="contenitore-piatti"></div>
-        </div>
 
-        <!-- DASHBOARD -->
-        <div id="sec-dashboard" class="hidden">
-            <div class="stats-row" id="stats-dash"></div>
-            <div class="card to">
-                <div class="card-title">Impostazioni Globali</div>
-                <div style="display:flex;gap:20px;flex-wrap:wrap;align-items:flex-end;margin-top:4px">
-                    <div class="field">
-                        <label>Food Cost Obiettivo (%)</label>
-                        <input type="number" id="global-fc-target" value="30" step="1" min="5" max="80" style="width:80px" onchange="aggiornaDashboard()">
-                    </div>
-                    <div class="field">
-                        <label>IVA Applicata (%)</label>
-                        <input type="number" id="global-iva" value="10" step="1" min="0" max="22" style="width:80px" onchange="aggiornaDashboard()">
-                    </div>
-                    <div style="font-size:11px;color:var(--text3);padding-bottom:10px">Modifica per ricalcolare tutti i prezzi.</div>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-title">Analisi Prezzi &amp; Margini</div>
-                <div class="tbl-wrap">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Piatto</th>
-                                <th>Costo MP</th>
-                                <th>Prezzo Cons. (netto)</th>
-                                <th>Prezzo da Menù (IVA inc.)</th>
-                                <th>Tuo Prezzo Finale</th>
-                                <th>Food Cost Reale</th>
-                                <th>Stato</th>
-                            </tr>
-                        </thead>
-                        <tbody id="lista-dashboard"></tbody>
-                    </table>
-                </div>
-            </div>
         </div>
-
     </div>
-</div>
-```
-
 </div>
 
 <!-- MOBILE BOTTOM NAV -->
-
 <nav class="bottom-nav" id="bottom-nav">
     <button class="bnav-btn active" onclick="switchTab('magazzino')" id="bnav-magazzino">
         <span class="bnav-ico">🧂</span>Magazzino
@@ -760,7 +746,6 @@
 </nav>
 
 <!-- MODAL NUOVO LOCALE -->
-
 <div class="modal-overlay hidden" id="modal-overlay">
     <div class="modal">
         <div class="modal-title">Nuovo Locale</div>
@@ -776,8 +761,27 @@
     </div>
 </div>
 
-<!-- MODAL IMPORT INGREDIENTI DA FATTURA -->
+<!-- MODAL IMPOSTAZIONI API -->
+<div class="modal-overlay hidden" id="modal-settings-overlay">
+    <div class="modal">
+        <div class="modal-title">⚙️ Impostazioni AI</div>
+        <div class="modal-sub">Inserisci la tua chiave API Anthropic per usare la scansione fatture. Viene salvata solo sul tuo telefono.</div>
+        <div class="field" style="margin-top:4px">
+            <label>API Key Anthropic</label>
+            <input type="password" id="settings-api-key" placeholder="sk-ant-...">
+        </div>
+        <div style="font-size:11px;color:var(--text3);margin-top:8px;line-height:1.5">
+            📍 La trovi su <strong>console.anthropic.com</strong> → API Keys.<br>
+            🔒 Non viene mai inviata a nessun server esterno.
+        </div>
+        <div class="modal-actions">
+            <button class="btn btn-cancel" onclick="chiudiSettings()">Annulla</button>
+            <button class="btn btn-p" onclick="salvaSettings()">Salva</button>
+        </div>
+    </div>
+</div>
 
+<!-- MODAL IMPORT INGREDIENTI DA FATTURA -->
 <div class="modal-overlay hidden" id="modal-import-overlay" style="align-items:flex-end;padding:0">
     <div class="modal" style="border-radius:var(--r3) var(--r3) 0 0;max-width:100%;width:100%;max-height:80vh;overflow-y:auto">
         <div class="modal-title">📋 Ingredienti Trovati</div>
@@ -791,7 +795,6 @@
 </div>
 
 <!-- MODAL MODIFICA INGREDIENTE -->
-
 <div class="modal-overlay hidden" id="modal-modifica-overlay">
     <div class="modal">
         <div class="modal-title">Modifica Ingrediente</div>
@@ -822,7 +825,6 @@
 </div>
 
 <!-- MODAL CONFERMA ELIMINA -->
-
 <div class="modal-overlay hidden" id="confirm-overlay">
     <div class="modal">
         <div class="modal-title" id="confirm-title">Conferma eliminazione</div>
@@ -902,11 +904,17 @@ async function analizzaFattura(input) {
     const file = input.files[0];
     if (!file) return;
 
+    const apiKey = localStorage.getItem('anthropicApiKey');
+    if (!apiKey) {
+        alert('⚙️ Prima inserisci la tua API key di Anthropic dalle Impostazioni (icona ingranaggio in alto).');
+        input.value = '';
+        return;
+    }
+
     const status = document.getElementById('fattura-status');
     const previewWrap = document.getElementById('fattura-preview-wrap');
     const preview = document.getElementById('fattura-preview');
 
-    // Mostra preview immagine
     const reader = new FileReader();
     reader.onload = async function(e) {
         const base64 = e.target.result.split(',')[1];
@@ -914,15 +922,20 @@ async function analizzaFattura(input) {
 
         preview.src = e.target.result;
         previewWrap.style.display = 'block';
-        status.textContent = '🔍 Analisi in corso...';
+        status.textContent = '🔍 Analisi in corso... (può richiedere 10-20 secondi)';
         status.style.color = 'var(--accent)';
 
         try {
             const response = await fetch('https://api.anthropic.com/v1/messages', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-api-key': apiKey,
+                    'anthropic-version': '2023-06-01',
+                    'anthropic-dangerous-direct-browser-access': 'true'
+                },
                 body: JSON.stringify({
-                    model: 'claude-sonnet-4-20250514',
+                    model: 'claude-haiku-4-5-20251001',
                     max_tokens: 1500,
                     messages: [{
                         role: 'user',
@@ -935,7 +948,7 @@ async function analizzaFattura(input) {
                                 type: 'text',
                                 text: `Analizza questa fattura di un fornitore alimentare italiano. 
 Estrai tutti gli ingredienti/prodotti alimentari con i loro prezzi.
-Rispondi SOLO con un JSON valido, senza testo aggiuntivo, nel formato:
+Rispondi SOLO con un JSON valido, senza testo aggiuntivo né markdown, nel formato:
 {
   "fornitore": "nome fornitore se visibile o stringa vuota",
   "ingredienti": [
@@ -947,14 +960,21 @@ Rispondi SOLO con un JSON valido, senza testo aggiuntivo, nel formato:
     }
   ]
 }
-Se il prezzo è per unità o confezione (non al kg), calcola o stima il prezzo al kg se possibile, altrimenti usa il prezzo unitario e indicalo nelle note.
-Includi solo prodotti alimentari, ignora spese di spedizione, IVA separata, sconti generici.
-Se non riesci a leggere la fattura, restituisci {"fornitore":"","ingredienti":[]}.`
+Note importanti:
+- Usa il prezzo IVA esclusa (imponibile)
+- Se il prezzo è per confezione/unità, prova a calcolare il prezzo al kg dividendo per il peso. Altrimenti usa il prezzo unitario e nelle note specifica "prezzo a pezzo" o "prezzo a confezione di Xkg".
+- Includi solo prodotti alimentari, escludi spese di spedizione, IVA, sconti generici.
+- Se non riesci a leggere la fattura, restituisci {"fornitore":"","ingredienti":[]}.`
                             }
                         ]
                     }]
                 })
             });
+
+            if (!response.ok) {
+                const err = await response.json().catch(() => ({}));
+                throw new Error(err.error?.message || `Errore HTTP ${response.status}`);
+            }
 
             const data = await response.json();
             const testo = data.content?.[0]?.text || '{}';
@@ -976,19 +996,37 @@ Se non riesci a leggere la fattura, restituisci {"fornitore":"","ingredienti":[]
             status.textContent = `✅ Trovati ${parsed.ingredienti.length} ingredienti!`;
             status.style.color = 'var(--green)';
 
-            // Mostra modal di importazione
             mostraImport(parsed.fornitore || '', parsed.ingredienti);
 
         } catch (err) {
-            status.textContent = '❌ Errore analisi. Riprova con una foto più chiara.';
+            status.textContent = '❌ ' + (err.message || 'Errore analisi. Riprova.');
             status.style.color = 'var(--red)';
             console.error(err);
         }
 
-        // Reset input file per permettere di ricaricare la stessa foto
         input.value = '';
     };
     reader.readAsDataURL(file);
+}
+
+function apriSettings() {
+    const key = localStorage.getItem('anthropicApiKey') || '';
+    document.getElementById('settings-api-key').value = key;
+    document.getElementById('modal-settings-overlay').classList.remove('hidden');
+}
+
+function chiudiSettings() {
+    document.getElementById('modal-settings-overlay').classList.add('hidden');
+}
+
+function salvaSettings() {
+    const key = document.getElementById('settings-api-key').value.trim();
+    if (key && !key.startsWith('sk-ant-')) {
+        if (!confirm('La chiave non sembra valida (dovrebbe iniziare con "sk-ant-"). Salvarla comunque?')) return;
+    }
+    localStorage.setItem('anthropicApiKey', key);
+    chiudiSettings();
+    if (key) alert('✅ Chiave API salvata! Ora puoi usare la scansione fatture.');
 }
 
 function mostraImport(fornitore, ingredienti) {
@@ -1568,6 +1606,5 @@ if (appDB.locali.length === 0 || !appDB.localeAttivoId) {
     avviaApp();
 }
 </script>
-
 </body>
 </html>
