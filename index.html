@@ -989,7 +989,7 @@
         </div>
 
         <div style="margin-top:12px;padding:8px 10px;background:var(--surface3);border-radius:var(--r);font-size:12px;color:var(--text2);font-weight:600;text-align:center">
-            🏷️ Versione 4.0 — Schede compatte
+            🏷️ Versione 4.1 — Stima prezzi AI nelle schede
         </div>
         <div class="modal-actions">
             <button class="btn btn-cancel" onclick="chiudiSettings()">Annulla</button>
@@ -2330,10 +2330,11 @@ ${magazzino.length ? JSON.stringify(magazzino) : 'nessuno'}
 Rispondi SOLO con JSON valido, senza testo né markdown:
 {
   "nomePiatto": "nome del piatto",
-  "ingredienti": [ { "nome": "ingrediente", "grammiTotali": 0 } ],
+  "ingredienti": [ { "nome": "ingrediente", "grammiTotali": 0, "prezzoKgStimato": 0, "resaStimata": 100 } ],
   "procedimento": "il procedimento passo-passo, in testo chiaro per chi cucina. Mantieni i passaggi, le temperature, i tempi e le note. Se la ricetta non ha procedimento, lascia stringa vuota."
 }
-Includi solo ingredienti alimentari con una quantità stimabile. "grammiTotali" è la quantità per l'INTERA ricetta (il batch), non per porzione.`;
+Includi solo ingredienti alimentari con una quantità stimabile. "grammiTotali" è la quantità per l'INTERA ricetta (il batch), non per porzione.
+Per OGNI ingrediente indica anche "prezzoKgStimato": prezzo di acquisto all'ingrosso STIMATO in €/kg (lordo, IVA esclusa, mercato italiano attuale), e "resaStimata": resa netta % tipica dopo pulizia/scarto (100 se non c'è scarto).`;
 }
 
 async function _chiamaRicettaAI(apiKey, content){
@@ -2481,6 +2482,8 @@ function mostraImportRicetta(parsed, porzioni){
     _ricettaCandidati = (parsed.ingredienti || []).map(ing => ({
         nome: ing.nome || '',
         grammiTot: Math.max(0, parseFloat(ing.grammiTotali) || 0),
+        prezzoStim: Math.max(0, parseFloat(ing.prezzoKgStimato) || 0) || null,
+        resaStim: Math.min(100, Math.max(1, parseFloat(ing.resaStimata) || 100)),
         ingId: abbinaIngrediente(ing.nome)
     }));
     renderImportRicetta();
@@ -2499,10 +2502,10 @@ function renderImportRicetta(){
         const stato = matched
             ? `<div style="font-size:11px;color:var(--green);font-weight:600;margin-top:8px">✓ a magazzino: ${esc(ingById(c.ingId).nome)}</div>`
             : `<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:8px">
-                   <div class="field"><label>€/Kg stimato</label><input type="number" id="ric-prezzo-${idx}" step="0.01" min="0" placeholder="prezzo"></div>
-                   <div class="field"><label>Resa %</label><input type="number" id="ric-resa-${idx}" step="1" min="1" max="100" value="100"></div>
+                   <div class="field"><label>€/Kg stimato ✨</label><input type="number" id="ric-prezzo-${idx}" step="0.01" min="0" value="${c.prezzoStim || ''}" placeholder="prezzo"></div>
+                   <div class="field"><label>Resa %</label><input type="number" id="ric-resa-${idx}" step="1" min="1" max="100" value="${c.resaStim || 100}"></div>
                </div>
-               <div style="font-size:10px;color:var(--yellow);margin-top:4px">⚠ non a magazzino — verrà creato col flag ✨ AI da verificare</div>`;
+               <div style="font-size:10px;color:var(--yellow);margin-top:4px">⚠ non a magazzino — ${c.prezzoStim ? 'prezzo stimato AI, correggilo se serve:' : 'inserisci un prezzo:'} verrà creato col flag ✨ AI da verificare</div>`;
         return `<div style="border:1px solid var(--border);border-radius:var(--r2);padding:12px;margin-bottom:10px;background:var(--surface2)">
             <div style="display:flex;align-items:center;gap:10px">
                 <input type="checkbox" id="ric-check-${idx}" checked style="width:18px;height:18px;flex-shrink:0;accent-color:var(--accent)">
