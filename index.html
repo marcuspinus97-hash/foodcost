@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <meta name="theme-color" content="#f2efe7">
+    <meta name="theme-color" content="#f4f2ec">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Food Cost">
@@ -507,6 +507,91 @@
         ::-webkit-scrollbar { width:4px; height:4px; }
         ::-webkit-scrollbar-track { background:transparent; }
         ::-webkit-scrollbar-thumb { background:var(--border2); border-radius:99px; }
+        /* ═══════════ TEMA MODERNO (override coerente) ═══════════ */
+        :root {
+            --bg:       #f4f2ec;
+            --surface:  #ffffff;
+            --surface2: #f9f7f1;
+            --surface3: #efece3;
+            --border:   rgba(24,24,27,0.08);
+            --border2:  rgba(24,24,27,0.16);
+            --text:     #191919;
+            --text2:    #52504b;
+            --text3:    #9c988f;
+            --accent:   #3e63dd;
+            --accent2:  #6c8bea;
+            --asoft:    rgba(62,99,221,0.09);
+            --aborder:  rgba(62,99,221,0.24);
+            --green:    #3d9a6f;
+            --gsoft:    rgba(61,154,111,0.12);
+            --red:      #d4553d;
+            --rsoft:    rgba(212,85,61,0.10);
+            --viola:    #7c5fc9;
+            --r:        10px;
+            --r2:       14px;
+            --r3:       20px;
+            --shadow:   0 1px 2px rgba(24,24,27,0.05), 0 2px 8px rgba(24,24,27,0.04);
+            --shadow2:  0 8px 30px rgba(24,24,27,0.10), 0 2px 8px rgba(24,24,27,0.06);
+        }
+        body { background: radial-gradient(1200px 500px at 80% -10%, rgba(62,99,221,0.05), transparent 60%), var(--bg); }
+
+        /* Bottoni: profondità e micro-interazioni */
+        .btn { border-radius: 11px; transition: transform .12s ease, box-shadow .15s ease, filter .15s ease; }
+        .btn:active { transform: scale(0.97); }
+        .btn:hover  { filter: brightness(1.04); }
+        .btn-p { background: linear-gradient(135deg, #3e63dd, #5a7ae6); box-shadow: 0 3px 12px rgba(62,99,221,0.32); }
+        .btn-g { background: linear-gradient(135deg, #3d9a6f, #4fb383); box-shadow: 0 3px 12px rgba(61,154,111,0.30); }
+
+        /* Card e schede ricetta */
+        .card, .recipe-card { border-radius: var(--r3); box-shadow: var(--shadow); border: 1px solid var(--border); }
+        .card { transition: box-shadow .18s ease; }
+        .recipe-card:hover, .card:hover { box-shadow: 0 4px 18px rgba(24,24,27,0.08); }
+
+        /* Input: focus visibile e coerente */
+        input[type="text"], input[type="number"], input[type="email"], input[type="password"], input[type="search"], select, textarea {
+            border-radius: 10px !important;
+            transition: border-color .15s ease, box-shadow .15s ease;
+        }
+        input:focus, select:focus, textarea:focus {
+            outline: none !important;
+            border-color: var(--accent) !important;
+            box-shadow: 0 0 0 3px rgba(62,99,221,0.14) !important;
+        }
+
+        /* Tabelle */
+        .tbl-wrap { border-radius: var(--r2); }
+        thead th { background: var(--surface2); }
+        tbody tr { transition: background .12s ease; }
+        tbody tr:hover { background: rgba(62,99,221,0.03); }
+
+        /* Modal: vetro morbido */
+        .modal-overlay { backdrop-filter: blur(6px); background: rgba(24,24,27,0.34); }
+        .modal { border-radius: var(--r3); box-shadow: var(--shadow2); border: 1px solid rgba(255,255,255,0.6); }
+
+        /* Sidebar raffinata */
+        .sidebar { background: rgba(255,255,255,0.72); backdrop-filter: blur(14px); border-right: 1px solid var(--border); }
+
+        /* Nav mobile flottante con blur */
+        @media (max-width: 900px) {
+            .bottom-nav {
+                left: 10px; right: 10px; bottom: calc(8px + env(safe-area-inset-bottom));
+                border-radius: 22px;
+                background: rgba(255,255,255,0.85);
+                backdrop-filter: blur(16px);
+                -webkit-backdrop-filter: blur(16px);
+                border: 1px solid var(--border);
+                border-top: 1px solid var(--border);
+                box-shadow: 0 8px 28px rgba(24,24,27,0.14);
+                padding-bottom: 0;
+            }
+            .content { padding-bottom: 104px; }
+        }
+
+        /* Scrollbar discreta */
+        ::-webkit-scrollbar { width: 9px; height: 9px; }
+        ::-webkit-scrollbar-thumb { background: rgba(24,24,27,0.16); border-radius: 99px; border: 2px solid transparent; background-clip: content-box; }
+        ::-webkit-scrollbar-thumb:hover { background-color: rgba(24,24,27,0.28); }
+        ::-webkit-scrollbar-track { background: transparent; }
     </style>
 </head>
 <body>
@@ -698,6 +783,12 @@
 
             <!-- RICETTARIO -->
             <div id="sec-ricettario" class="hidden">
+                <div class="card" style="padding:12px 16px;margin-bottom:14px">
+                    <div style="position:relative">
+                        <span style="position:absolute;left:11px;top:50%;transform:translateY(-50%);font-size:14px;opacity:0.55">🔍</span>
+                        <input type="search" id="search-ricette" name="fc-cerca-ricette" placeholder="Cerca preparazione o piatto…" oninput="renderRicettario()" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" data-lpignore="true" data-1p-ignore style="padding-left:34px;margin:0;width:100%">
+                    </div>
+                </div>
                 <!-- IMPORTA RICETTA AI -->
                 <div class="card" style="border-color:rgba(138,114,181,0.3);background:linear-gradient(135deg,rgba(138,114,181,0.05),var(--surface))">
                     <div class="card-title" style="color:#8a72b5">✨ Importa Ricetta con AI <span class="ctag" style="background:rgba(138,114,181,0.1);color:#8a72b5">beta</span></div>
@@ -898,7 +989,7 @@
         </div>
 
         <div style="margin-top:12px;padding:8px 10px;background:var(--surface3);border-radius:var(--r);font-size:12px;color:var(--text2);font-weight:600;text-align:center">
-            🏷️ Versione 3.7 — Schede AI e procedimento
+            🏷️ Versione 4.0 — Schede compatte
         </div>
         <div class="modal-actions">
             <button class="btn btn-cancel" onclick="chiudiSettings()">Annulla</button>
@@ -1011,6 +1102,42 @@
     </div>
 </div>
 
+<!-- MODAL VISTA CUCINA (dosi scalabili, senza costi) -->
+<div class="modal-overlay hidden" id="modal-cucina-overlay" style="align-items:flex-end;padding:0">
+    <div class="modal" style="border-radius:var(--r3) var(--r3) 0 0;max-width:100%;width:100%;max-height:90vh;overflow-y:auto">
+        <div class="modal-title" style="color:#8a72b5">👨‍🍳 <span id="cuc-nome"></span></div>
+        <div class="modal-sub">Scala le dosi in base a quello che hai. Imposta un moltiplicatore, oppure scegli "Ho disponibile" su un ingrediente.</div>
+        <div style="background:rgba(138,114,181,0.07);border:1px solid rgba(138,114,181,0.3);border-radius:var(--r2);padding:12px;margin-bottom:14px">
+            <div class="field" style="margin-bottom:8px">
+                <label>Riferimento</label>
+                <select id="cuc-ref" onchange="renderCucina()"></select>
+            </div>
+            <div class="field">
+                <label id="cuc-qty-lbl">Moltiplicatore ×</label>
+                <input type="number" id="cuc-qty" min="0" step="any" value="1" oninput="renderCucina()">
+            </div>
+            <div id="cuc-fattore" style="font-size:12px;color:#8a72b5;font-weight:700;margin-top:8px"></div>
+        </div>
+        <div class="tbl-wrap">
+            <table>
+                <thead><tr><th>Ingrediente</th><th style="text-align:right">Dose</th></tr></thead>
+                <tbody id="cuc-righe"></tbody>
+                <tfoot><tr>
+                    <td style="text-align:right;font-size:10px;color:var(--text3);font-weight:700;text-transform:uppercase;letter-spacing:0.8px">Peso totale</td>
+                    <td class="td-val" id="cuc-peso" style="text-align:right"></td>
+                </tr></tfoot>
+            </table>
+        </div>
+        <div id="cuc-proc-wrap" style="margin-top:16px">
+            <div style="font-weight:700;font-size:14px;color:#8a72b5;margin-bottom:6px">📖 Procedimento</div>
+            <div id="cuc-proc" style="font-size:15px;line-height:1.7;color:var(--text);white-space:pre-wrap"></div>
+        </div>
+        <div class="modal-actions" style="position:sticky;bottom:0;background:var(--surface);padding-top:12px">
+            <button class="btn btn-p" onclick="chiudiCucina()" style="width:100%">Chiudi</button>
+        </div>
+    </div>
+</div>
+
 <!-- MODAL CONFERMA ELIMINA -->
 <div class="modal-overlay hidden" id="confirm-overlay">
     <div class="modal">
@@ -1093,6 +1220,14 @@ function migraENormalizza(D){
     return D;
 }
 migraENormalizza(appDB);
+
+// Invio con Enter nei campi di login (schermata iniziale e impostazioni)
+document.addEventListener('keydown', e => {
+    if (e.key !== 'Enter') return;
+    const id = e.target && e.target.id;
+    if (id === 'sb-email-sel' || id === 'sb-pass-sel') { e.preventDefault(); sbDoLogin('sb-email-sel','sb-pass-sel'); }
+    else if (id === 'sb-email' || id === 'sb-pass')   { e.preventDefault(); sbDoLogin(); }
+});
 
 // Dati di esempio per un nuovo locale
 function datiEsempio() {
@@ -2139,7 +2274,9 @@ function renderMagazzino() {
 function creaNuovoPiatto() {
     const nome = document.getElementById('nuovo-piatto-nome').value.trim();
     if (!nome) return alert('Inserisci un nome per il piatto.');
-    db().piatti.push({ id:'p'+Date.now(), nome, prezzoScelto:0, ricetta:[] });
+    const _nid='p'+Date.now();
+    db().piatti.push({ id:_nid, nome, prezzoScelto:0, ricetta:[] });
+    _ricAperte.add(_nid);
     document.getElementById('nuovo-piatto-nome').value = '';
     salva();
 }
@@ -2147,7 +2284,9 @@ function creaNuovoPiatto() {
 function creaNuovaPreparazione() {
     const nome = document.getElementById('nuova-prep-nome').value.trim();
     if (!nome) return alert('Inserisci un nome per la preparazione.');
-    appDB.preparazioni.push({ id:'prep'+Date.now(), nome, ricetta:[] });
+    const _nid='prep'+Date.now();
+    appDB.preparazioni.push({ id:_nid, nome, ricetta:[] });
+    _ricAperte.add(_nid);
     document.getElementById('nuova-prep-nome').value = '';
     salva();
 }
@@ -2170,6 +2309,7 @@ function importaPiatto(selId) {
         ricetta: (orig.ricetta || []).map(r => Object.assign({}, r))
     };
     db().piatti.push(copia);
+    _ricAperte.add(copia.id);
     salva();
 }
 
@@ -2403,9 +2543,13 @@ function confermaImportRicetta(){
     });
     if(!ricetta.length) return alert('Nessun ingrediente valido. Controlla le quantità e, per quelli non a magazzino, inserisci il prezzo.');
     if(target === 'piatto'){
-        db().piatti.push({ id:'p'+Date.now(), nome, prezzoScelto:0, ricetta, procedimento });
+        const _nid='p'+Date.now();
+        db().piatti.push({ id:_nid, nome, prezzoScelto:0, ricetta, procedimento });
+        _ricAperte.add(_nid);
     } else {
-        appDB.preparazioni.push({ id:'prep'+Date.now(), nome, ricetta, procedimento });
+        const _nid='prep'+Date.now();
+        appDB.preparazioni.push({ id:_nid, nome, ricetta, procedimento });
+        _ricAperte.add(_nid);
     }
     chiudiImportRicetta();
     document.getElementById('ric-testo').value = '';
@@ -2451,11 +2595,92 @@ function rimuoviIng(pid, iid) {
     salva();
 }
 
+function _procMostraView(pid, p){
+    const view = document.getElementById('proc-view-'+pid);
+    if(view) view.innerHTML = p.procedimento ? esc(p.procedimento) : '<span style="color:var(--text3)">Nessun procedimento. Tocca Modifica per aggiungerlo.</span>';
+    const ed = document.getElementById('proc-edit-'+pid); if(ed) ed.style.display = 'none';
+    if(view) view.style.display = '';
+    const b = document.getElementById('proc-editbtn-'+pid); if(b) b.style.display = '';
+}
+
+function modificaProcedimento(pid){
+    const v = document.getElementById('proc-view-'+pid); if(v) v.style.display = 'none';
+    const ed = document.getElementById('proc-edit-'+pid); if(ed) ed.style.display = '';
+    const b = document.getElementById('proc-editbtn-'+pid); if(b) b.style.display = 'none';
+}
+
+function annullaProcedimento(pid){
+    const p = findRicetta(pid); if(!p) return;
+    const ta = document.getElementById('proc-'+pid); if(ta) ta.value = p.procedimento || '';
+    _procMostraView(pid, p);
+}
+
 function salvaProcedimento(pid){
     const p = findRicetta(pid);
     if(!p) return;
     p.procedimento = (document.getElementById('proc-'+pid)?.value || '').trim();
-    salva();
+    salvaDB();
+    sbScheduleSync();
+    _procMostraView(pid, p);
+    const b = document.getElementById('proc-editbtn-'+pid);
+    if(b){ b.textContent = '✅ Salvato'; setTimeout(() => { if(b) b.textContent = '✏️ Modifica'; }, 1600); }
+}
+
+// ── VISTA CUCINA: dosi scalabili, nessun costo ──
+let _cucLines = [], _cucNome = '';
+function _fmtPeso(g){
+    if(g >= 1000) return (Math.round(g/100)/10).toString().replace('.', ',') + ' kg';
+    return (Math.round(g*10)/10).toString().replace('.', ',') + ' g';
+}
+function mostraCucina(pid){
+    const p = findRicetta(pid);
+    if(!p) return;
+    _cucNome = p.nome;
+    _cucLines = (p.ricetta||[]).map(r => {
+        if(r.prepId){
+            const prep = (appDB.preparazioni||[]).find(x => x.id === r.prepId);
+            return { nome: (prep ? prep.nome : 'preparazione') + ' (prep.)', grammi: r.grammi||0, unita:'g' };
+        }
+        const i = ingById(r.ingId);
+        return { nome: i ? i.nome : '—', grammi: r.grammi||0, unita: (i && i.unita === 'pz') ? 'pz' : 'g' };
+    }).filter(l => l.grammi > 0);
+    document.getElementById('cuc-nome').textContent = _cucNome;
+    document.getElementById('cuc-proc').textContent = (p.procedimento || '').trim() || 'Nessun procedimento inserito.';
+    const ref = document.getElementById('cuc-ref');
+    ref.innerHTML = '<option value="__mult">Moltiplicatore ×</option>' +
+        _cucLines.map((l, idx) => `<option value="${idx}">Ho disponibile: ${esc(l.nome)}</option>`).join('');
+    ref.value = '__mult';
+    document.getElementById('cuc-qty').value = 1;
+    renderCucina();
+    document.getElementById('modal-cucina-overlay').classList.remove('hidden');
+}
+function chiudiCucina(){ document.getElementById('modal-cucina-overlay').classList.add('hidden'); }
+function renderCucina(){
+    const ref = document.getElementById('cuc-ref').value;
+    const qty = parseFloat(document.getElementById('cuc-qty').value);
+    const lbl = document.getElementById('cuc-qty-lbl');
+    let fattore = 1, info = '';
+    if(ref === '__mult'){
+        lbl.textContent = 'Moltiplicatore ×';
+        fattore = (qty && qty > 0) ? qty : 1;
+        info = `Tutte le dosi × ${fattore.toString().replace('.', ',')}`;
+    } else {
+        const idx = parseInt(ref);
+        const l = _cucLines[idx];
+        const base = l ? l.grammi : 0;
+        lbl.textContent = `Quantità disponibile (${l ? l.unita : 'g'})`;
+        fattore = (qty && qty > 0 && base > 0) ? qty / base : 1;
+        info = `Dose base di ${l ? l.nome : ''}: ${l && l.unita === 'pz' ? Math.round(base)+' pz' : _fmtPeso(base)} → fattore ${(Math.round(fattore*1000)/1000).toString().replace('.', ',')}`;
+    }
+    document.getElementById('cuc-fattore').textContent = info;
+    let pesoG = 0;
+    document.getElementById('cuc-righe').innerHTML = _cucLines.map(l => {
+        const v = l.grammi * fattore;
+        if(l.unita === 'g') pesoG += v;
+        const disp = l.unita === 'pz' ? `${Math.round(v)} pz` : _fmtPeso(v);
+        return `<tr><td class="td-name">${esc(l.nome)}</td><td class="td-m" style="text-align:right;font-weight:700;font-size:15px">${disp}</td></tr>`;
+    }).join('');
+    document.getElementById('cuc-peso').textContent = _fmtPeso(pesoG);
 }
 
 // Aggiunge una preparazione condivisa come componente, con controllo anti-ciclo
@@ -2479,6 +2704,17 @@ function rimuoviPrep(pid, prepId) {
     salva();
 }
 
+
+// Schede ricetta aperte (stato di sessione: resta aperto mentre lavori, compatte al primo giro)
+const _ricAperte = new Set();
+function toggleRicetta(pid){
+    const apre = !_ricAperte.has(pid);
+    if(apre) _ricAperte.add(pid); else _ricAperte.delete(pid);
+    const body = document.getElementById('rbody-'+pid);
+    if(body) body.style.display = apre ? '' : 'none';
+    const chev = document.getElementById('rchev-'+pid);
+    if(chev){ chev.textContent = apre ? '▲' : '▼'; chev.title = apre ? 'Chiudi' : 'Apri'; }
+}
 
 function renderRicettario() {
     const ingOrdinati = [...appDB.ingredienti].sort((a,b) => a.nome.localeCompare(b.nome, 'it'));
@@ -2522,18 +2758,23 @@ function renderRicettario() {
         const cardStyle = isPrep ? ' style="border-color:rgba(138,114,181,0.3)"' : '';
         const tag = isPrep ? ' <span class="ctag" style="background:rgba(138,114,181,0.1);color:#8a72b5">condivisa</span>' : '';
 
+        const aperta = _ricAperte.has(p.id);
         return `<div class="recipe-card"${cardStyle}>
-            <div class="recipe-head">
+            <div class="recipe-head" onclick="toggleRicetta('${p.id}')" style="cursor:pointer">
                 <div class="recipe-head-left">
                     <div class="recipe-ico">${ico}</div>
                     <div>
                         <div class="recipe-name">${esc(p.nome)}${tag}</div>
-                        <div class="recipe-meta">Costo MP: <span style="color:var(--accent);font-family:'JetBrains Mono',monospace;font-weight:600">€ ${costo.toFixed(3)}</span></div>
+                        <div class="recipe-meta">Costo MP: <span style="color:var(--accent);font-family:'JetBrains Mono',monospace;font-weight:600">€ ${costo.toFixed(3)}</span> · ${(p.ricetta||[]).length} ingredienti</div>
                     </div>
                 </div>
-                <button onclick="${delFn}" class="btn-link-del">Elimina</button>
+                <div style="display:flex;align-items:center;gap:8px" onclick="event.stopPropagation()">
+                    <button onclick="mostraCucina('${p.id}')" class="btn" style="background:#8a72b5;color:#fff;font-size:12px;padding:6px 11px">👨‍🍳</button>
+                    <button id="rchev-${p.id}" onclick="toggleRicetta('${p.id}')" class="btn btn-cancel" style="font-size:14px;padding:6px 12px" title="${aperta ? 'Chiudi' : 'Apri'}">${aperta ? '▲' : '▼'}</button>
+                </div>
             </div>
-            <div class="recipe-body">
+            <div class="recipe-body" id="rbody-${p.id}" style="${aperta ? '' : 'display:none'}">
+                <div style="text-align:right;margin-bottom:6px"><button onclick="${delFn}" class="btn-link-del">Elimina scheda</button></div>
                 <div class="tbl-wrap">
                     <table>
                         <thead><tr><th>Ingrediente</th><th>Qtà</th><th>Costo</th><th></th></tr></thead>
@@ -2544,11 +2785,20 @@ function renderRicettario() {
                         </tr></tfoot>
                     </table>
                 </div>
-                <details class="proc-box"${p.procedimento ? ' open' : ''} style="margin:10px 0;border:1px solid var(--border);border-radius:var(--r2);padding:0 12px;background:var(--surface2)">
-                    <summary style="cursor:pointer;font-weight:700;font-size:13px;padding:10px 0;color:#8a72b5">📖 Procedimento</summary>
-                    <textarea id="proc-${p.id}" rows="5" placeholder="Scrivi qui il procedimento per la cucina…" style="width:100%;box-sizing:border-box;margin-bottom:8px;padding:9px;background:var(--surface);border:1px solid var(--border2);border-radius:var(--r);color:var(--text);font-family:'Jost',sans-serif;font-size:13px;line-height:1.55;resize:vertical">${esc(p.procedimento||'')}</textarea>
-                    <button onclick="salvaProcedimento('${p.id}')" class="btn" style="background:#8a72b5;color:#fff;margin-bottom:12px;font-size:12px;padding:7px 12px">💾 Salva procedimento</button>
-                </details>
+                <div class="proc-wrap" style="margin:10px 0;border:1px solid var(--border);border-radius:var(--r2);background:var(--surface2);padding:12px">
+                    <div style="display:flex;justify-content:space-between;align-items:center;gap:8px">
+                        <div style="font-weight:700;font-size:13px;color:#8a72b5">📖 Procedimento</div>
+                        <button id="proc-editbtn-${p.id}" onclick="modificaProcedimento('${p.id}')" class="btn" style="background:#fff;color:#8a72b5;border:1px solid #8a72b5;font-size:12px;padding:5px 10px">✏️ Modifica</button>
+                    </div>
+                    <div id="proc-view-${p.id}" style="margin-top:8px;font-size:13px;line-height:1.6;color:var(--text);white-space:pre-wrap">${p.procedimento ? esc(p.procedimento) : '<span style="color:var(--text3)">Nessun procedimento. Tocca Modifica per aggiungerlo.</span>'}</div>
+                    <div id="proc-edit-${p.id}" style="display:none;margin-top:8px">
+                        <textarea id="proc-${p.id}" rows="8" placeholder="Scrivi qui il procedimento per la cucina…" style="width:100%;box-sizing:border-box;padding:10px;background:var(--surface);border:1px solid var(--border2);border-radius:var(--r);color:var(--text);font-family:'Jost',sans-serif;font-size:13px;line-height:1.6;resize:vertical">${esc(p.procedimento||'')}</textarea>
+                        <div style="display:flex;gap:8px;margin-top:8px;align-items:center">
+                            <button onclick="salvaProcedimento('${p.id}')" class="btn" style="background:#8a72b5;color:#fff;font-size:12px;padding:7px 12px">💾 Salva</button>
+                            <button onclick="annullaProcedimento('${p.id}')" class="btn btn-cancel" style="font-size:12px;padding:7px 12px">Annulla</button>
+                        </div>
+                    </div>
+                </div>
                 <div class="add-row">
                     <div class="field" style="flex:1">
                         <label>Cerca e seleziona ingrediente</label>
@@ -2572,20 +2822,24 @@ function renderRicettario() {
     }
 
     const cp = document.getElementById('contenitore-preparazioni');
+    const filtro = normNome(document.getElementById('search-ricette')?.value || '');
+    const prepVis   = (appDB.preparazioni||[]).filter(p => !filtro || normNome(p.nome).includes(filtro));
+    const piattiVis = (db().piatti||[]).filter(p => !filtro || normNome(p.nome).includes(filtro));
+
     if (cp) {
-        cp.innerHTML = (appDB.preparazioni||[]).length
-            ? appDB.preparazioni.map(p => cardRicetta(p, true)).join('')
-            : `<div class="card"><div class="empty" style="padding:18px"><div class="empty-txt">Nessuna preparazione base. Creane una sopra (es. impasto polpette, salse del laboratorio).</div></div></div>`;
+        cp.innerHTML = prepVis.length
+            ? prepVis.map(p => cardRicetta(p, true)).join('')
+            : `<div class="card"><div class="empty" style="padding:18px"><div class="empty-txt">${filtro ? 'Nessuna preparazione corrisponde alla ricerca.' : 'Nessuna preparazione base. Creane una sopra (es. impasto polpette, salse del laboratorio).'}</div></div></div>`;
     }
 
     const c = document.getElementById('contenitore-piatti');
-    c.innerHTML = (db().piatti||[]).length
-        ? db().piatti.map(p => cardRicetta(p, false)).join('')
-        : `<div class="card"><div class="empty"><div class="empty-ico">🍽️</div><div class="empty-txt">Nessun piatto in questo locale. Creane uno sopra.</div></div></div>`;
+    c.innerHTML = piattiVis.length
+        ? piattiVis.map(p => cardRicetta(p, false)).join('')
+        : `<div class="card"><div class="empty"><div class="empty-ico">🍽️</div><div class="empty-txt">${filtro ? 'Nessun piatto corrisponde alla ricerca.' : 'Nessun piatto in questo locale. Creane uno sopra.'}</div></div></div>`;
 
     renderImportPiatto();
 
-    const tutte = [...(appDB.preparazioni||[]), ...(db().piatti||[])];
+    const tutte = [...prepVis, ...piattiVis];
     tutte.forEach(p => {
         const searchEl = document.getElementById('search-' + p.id);
         const selEl    = document.getElementById('sel-' + p.id);
